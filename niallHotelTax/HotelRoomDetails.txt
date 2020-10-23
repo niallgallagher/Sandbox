@@ -1,0 +1,9 @@
+Single
+3
+23.50
+Double
+5
+27.50
+Triple
+4
+50.00
