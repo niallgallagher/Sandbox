@@ -16,10 +16,10 @@ public class HotelTax {
         while(!isValidOption) { //If the manager chooses the wrong option it will continue to loop till a correct response is given
             System.out.print("Do you wish to use the default tax of " + defaultTax + "%? [Y]es/[N]o: "); // Asking the manager which tax he wants to use
             String answer = getAnswerScan.nextLine(); // assign the response to the String variable answer
-            if(answer.equalsIgnoreCase("Y") || answer.equalsIgnoreCase("Yes") || answer.equalsIgnoreCase("YES")) { //Check if the response matches each option for Yes
+            if(answer.equalsIgnoreCase("Y") || answer.equalsIgnoreCase("Yes")) { //Check if the response matches each option for Yes
                 tax = defaultTax; //if Yes is the answer, assign the default value to variable tax
                 isValidOption = true; // set this to true so the loop will end
-            } else if (answer.equalsIgnoreCase("N") || answer.equalsIgnoreCase("No") || answer.equalsIgnoreCase("NO")) { //Check if the response matches all options for No
+            } else if (answer.equalsIgnoreCase("N") || answer.equalsIgnoreCase("No")) { //Check if the response matches all options for No
                 Scanner getTaxValueScan = new Scanner(System.in); //Create scanner object to take tax value from manager
                 System.out.print("What tax value should I use? "); // Ask the question, how much tax
                 tax = getTaxValueScan.nextDouble(); // get this value from the scanner
@@ -58,11 +58,12 @@ public class HotelTax {
             totalTax += totalRoomTax; // Adding this to running total of tax
             roomsCost = preTaxCost + totalTax; // Total cost including tax fo this room type
             totalFullValue += roomsCost; // Add to running total of full rooms value
+            
             System.out.printf("\nThere are %s %s rooms booked ", numberOfRooms, roomType); // Print out the information fpr this room type
-            System.out.printf("with a PreTax cost of Â£%.2f and a total cost of Â£%.2f", preTaxCost, roomsCost); // As above
+           System.out.printf("with a PreTax cost of £%.2f and a total cost of £%.2f", preTaxCost, roomsCost); // As above
         }
 
-        System.out.printf("\n\nThe total revenue for these rooms pre tax is Â£%.2f", fullPreTaxRoomValue); // Print out full values
-        System.out.printf("\nThe total value of room including tax is Â£%.2f and that includes the full tax of Â£%.2f", totalFullValue, totalTax); // As above
+        System.out.printf("\n\nThe total revenue for these rooms pre tax is £%.2f", fullPreTaxRoomValue); // Print out full values
+        System.out.printf("\nThe total value of room including tax is £%.2f and that includes the full tax of £%.2f", totalFullValue, totalTax); // As above
     }
 }
