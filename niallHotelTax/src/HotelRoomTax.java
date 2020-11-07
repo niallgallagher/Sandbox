@@ -11,7 +11,6 @@ public class HotelRoomTax {
 	 */
 	public static void main(String[] args) throws FileNotFoundException {
 		// I set the standard tax at 20 which is the percentage of the standard tax.
-		
 		double tax = 20;
 		
 		//I set up my Loop here to allow the programme to interpret the answers from the user.
@@ -24,13 +23,14 @@ public class HotelRoomTax {
 			String answer = getAnswerScan.nextLine();
 			
 			if (answer.equalsIgnoreCase("Y") || (answer.equalsIgnoreCase("Yes"))) {
-				isValidOption = true;
-				
-			} else if (answer.equalsIgnoreCase("N") || (answer.equalsIgnoreCase("No"))){
-				Scanner getTaxValueScan = new Scanner (System.in);
 				System.out.print("Specify Tax Rate (%) : ");
+				Scanner getTaxValueScan = new Scanner (System.in);
 				tax = getTaxValueScan.nextDouble();
-				isValidOption = true;
+			    isValidOption = true;
+			    getTaxValueScan.close();
+			} else if (answer.equalsIgnoreCase("N") || (answer.equalsIgnoreCase("No"))){
+			    isValidOption = true;
+
 			}
 			else {
 				System.out.print("Please choose a valid value [Y]es or [N]o");
@@ -44,19 +44,16 @@ public class HotelRoomTax {
 		Scanner scanner = new Scanner(roomDetailsFileReader);
 		
 		//I set my variables in the code below:
-		
 		String roomType;
 		int numberOfRooms;
-		double preTaxCost;
+		double preTaxCost = 0;
 		double costPerRoom;
-		double fullPreTaxRoomValue = 0;
-		double totalRoomTax;
+		double totalRoomTax = 0;
 		double totalTax = 0;
-		double roomsCost;
-		double totalFullValue = 0;
+		double totalIncome = 0;
+
 		
 		// a while scanner was used to make sure that the file reader's values were imported into the programme.
-		
 		while(scanner.hasNext()) {
 			roomType = scanner.next();
 			numberOfRooms = scanner.nextInt();
@@ -64,28 +61,23 @@ public class HotelRoomTax {
 			
 			//My Calculations are in the code below:
 			preTaxCost = costPerRoom * numberOfRooms;
-			fullPreTaxRoomValue += preTaxCost;
+			totalIncome += preTaxCost;
 			totalRoomTax = (preTaxCost/100)*tax; 
             totalTax += totalRoomTax;
-            roomsCost = preTaxCost + totalTax;
-            totalFullValue += roomsCost;
             
+
+            
+            System.out.printf("\nRoom Type: %s, Bookings: %s, Room Price: £%.2f, Income:£%.2f, Tax: £%.2f " ,roomType,numberOfRooms,costPerRoom, preTaxCost,totalRoomTax);
+
        // finally we use the output the values to the user using the calculations and quoted text.
-            System.out.printf("\nThere are %s %s rooms booked ", numberOfRooms, roomType); 
-            System.out.printf("with a PreTax cost of £%.2f and a total cost of £%.2f", preTaxCost, roomsCost); 
-         }
-
-         System.out.printf("\n\nThe total revenue for these rooms pre tax is £%.2f", fullPreTaxRoomValue); 
-         System.out.printf("\nThe total value of room including tax is £%.2f and that includes the full tax of £%.2f", totalFullValue, totalTax); 
-     }
             
+	}
+		scanner.close();
 		
-}
+		System.out.printf("\nTotal Income: £%.2f",totalIncome);
+		System.out.printf("\nTotal Tax: £%.2f",totalTax);
 
-Room Type : Single, Bookings : 5, Room Price : £23.50, Income : £117.50, Tax : £23.50
-Room Type : Double, Bookings : 3, Room Price : £27.50, Income : £82.50, Tax : £16.50
-Room Type : Suite, Bookings : 2, Room Price : £50.00, Income : £100.00, Tax : £20.00
-Total Income : £300.00
-Total Tax : £60.00
-
-
+  }
+}           
+		
+	
