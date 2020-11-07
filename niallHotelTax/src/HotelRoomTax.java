@@ -10,10 +10,9 @@ public class HotelRoomTax {
 	 * @throws FileNotFoundException
 	 */
 	public static void main(String[] args) throws FileNotFoundException {
-		// I set my two taxes as double's one with the standard 20% the other with 0 to allow use specification.
+		// I set the standard tax at 20 which is the percentage of the standard tax.
 		
-		double defaultTax = 20.0;
-		double tax = 0;
+		double tax = 20;
 		
 		//I set up my Loop here to allow the programme to interpret the answers from the user.
 		System.out.println("-- Room Tax System ---");
@@ -21,17 +20,15 @@ public class HotelRoomTax {
 		boolean isValidOption = false;
 		
 		while(!isValidOption) {
-			System.out.print("Do you wish to use the defualt tax of " + defaultTax + "% [Y]es or [N]o: " );
+			System.out.print("Specify Custom Tax Rate? [Y|N]: " );
 			String answer = getAnswerScan.nextLine();
 			
 			if (answer.equalsIgnoreCase("Y") || (answer.equalsIgnoreCase("Yes"))) {
-				tax = defaultTax;
 				isValidOption = true;
 				
-			}
-			else if (answer.equalsIgnoreCase("N") || (answer.equalsIgnoreCase("No"))){
+			} else if (answer.equalsIgnoreCase("N") || (answer.equalsIgnoreCase("No"))){
 				Scanner getTaxValueScan = new Scanner (System.in);
-				System.out.print("What tax value should I use? ");
+				System.out.print("Specify Tax Rate (%) : ");
 				tax = getTaxValueScan.nextDouble();
 				isValidOption = true;
 			}
@@ -39,7 +36,7 @@ public class HotelRoomTax {
 				System.out.print("Please choose a valid value [Y]es or [N]o");
 			}			
 		}
-		// The file reader was set up in this part of my code to allow  the programme to read the text from "HotelRoomDetails.txt".
+		// The file reader was set up in this part of my code to allow  the programme to read the text from "rooms.txt".
 		
 		String fileName = "rooms.txt";
 		File roomDetails = new File(fileName);
