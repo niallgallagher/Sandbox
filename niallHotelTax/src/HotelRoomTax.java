@@ -82,4 +82,10 @@ public class HotelRoomTax {
 		
 }
 
+Room Type : Single, Bookings : 5, Room Price : £23.50, Income : £117.50, Tax : £23.50
+Room Type : Double, Bookings : 3, Room Price : £27.50, Income : £82.50, Tax : £16.50
+Room Type : Suite, Bookings : 2, Room Price : £50.00, Income : £100.00, Tax : £20.00
+Total Income : £300.00
+Total Tax : £60.00
+
 
