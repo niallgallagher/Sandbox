@@ -6,14 +6,17 @@ import java.util.Scanner;
 public class HotelRoomTax {
 
 	/**
+	 * The application creates a console that opens the file "rooms.txt". The application requires a users input to set the tax value. 
+	 * The application reads the file and produces the calculations from the users input.
 	 * @param args
 	 * @throws FileNotFoundException
+	 * 
 	 */
 	public static void main(String[] args) throws FileNotFoundException {
 		// I set the standard tax at 20 which is the percentage of the standard tax.
 		double tax = 20;
 		
-		//I set up my Loop here to allow the programme to interpret the answers from the user.
+		//I set up my Loop here to allow the application to interpret the answers from the user.
 		System.out.println("-- Room Tax System ---");
 		Scanner getAnswerScan = new Scanner (System.in); 
 		boolean isValidOption = false;
@@ -36,7 +39,7 @@ public class HotelRoomTax {
 				System.out.print("Please choose a valid value [Y]es or [N]o");
 			}			
 		}
-		// The file reader was set up in this part of my code to allow  the programme to read the text from "rooms.txt".
+		// The file reader was set up in this part of my code to allow  the application to read the text from "rooms.txt".
 		
 		String fileName = "rooms.txt";
 		File roomDetails = new File(fileName);
@@ -53,7 +56,7 @@ public class HotelRoomTax {
 		double totalIncome = 0;
 
 		
-		// a while scanner was used to make sure that the file reader's values were imported into the programme.
+		// A while scanner was used to make sure that the file reader's values were imported into the application.
 		while(scanner.hasNext()) {
 			roomType = scanner.next();
 			numberOfRooms = scanner.nextInt();
@@ -65,15 +68,14 @@ public class HotelRoomTax {
 			totalRoomTax = (preTaxCost/100)*tax; 
             totalTax += totalRoomTax;
             
-
-            
+         // Finally output the values to the user using the calculations and quoted text.
             System.out.printf("\nRoom Type: %s, Bookings: %s, Room Price: £%.2f, Income:£%.2f, Tax: £%.2f " ,roomType,numberOfRooms,costPerRoom, preTaxCost,totalRoomTax);
-
-       // finally we use the output the values to the user using the calculations and quoted text.
             
 	}
+		// The while scanner we used earlier is closed to end the loop.
 		scanner.close();
 		
+		//The Total Income and Tax is printed out below: 
 		System.out.printf("\nTotal Income: £%.2f",totalIncome);
 		System.out.printf("\nTotal Tax: £%.2f",totalTax);
 
