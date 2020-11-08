@@ -8,6 +8,7 @@ public class HotelRoomTax {
 	/**
 	 * A new room tax system is required to help managers of a hotel determine how much tax they must pay. 
 	 * Every time the system runs, the tax rate may be specified by the managers or set to a suitable default which is 20%.
+	 * The outcome will show the income and tax from the rooms and then will add the total from these rooms.
 	 * @param args
 	 * @throws FileNotFoundException
 	 * 
@@ -72,7 +73,7 @@ public class HotelRoomTax {
             System.out.printf("\nRoom Type: %s, Bookings: %s, Room Price: £%.2f, Income:£%.2f, Tax: £%.2f " ,roomType,numberOfRooms,costPerRoom, preTaxCost,totalRoomTax);
             
 	}
-		// The while loop for the scanner we used earlier is closed to end the loop.
+		// The Scanner we used for the while loop was used was closed.
 		scanner.close();
 		
 		//The Total Income and Tax is printed out below: 
