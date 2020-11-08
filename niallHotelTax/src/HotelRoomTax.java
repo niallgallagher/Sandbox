@@ -6,8 +6,8 @@ import java.util.Scanner;
 public class HotelRoomTax {
 
 	/**
-	 * The application creates a console that opens the file "rooms.txt". The application requires a users input to set the tax value. 
-	 * The application reads the file and produces the calculations from the users input.
+	 * A new room tax system is required to help managers of a hotel determine how much tax they must pay. 
+	 * Every time the system runs, the tax rate may be specified by the managers or set to a suitable default which is 20%.
 	 * @param args
 	 * @throws FileNotFoundException
 	 * 
@@ -16,11 +16,11 @@ public class HotelRoomTax {
 		// I set the standard tax at 20 which is the percentage of the standard tax.
 		double tax = 20;
 		
-		//I set up my Loop here to allow the application to interpret the answers from the user.
 		System.out.println("-- Room Tax System ---");
 		Scanner getAnswerScan = new Scanner (System.in); 
 		boolean isValidOption = false;
 		
+		//I set up my Loop here to allow the application to interpret the answers from the user.
 		while(!isValidOption) {
 			System.out.print("Specify Custom Tax Rate? [Y|N]: " );
 			String answer = getAnswerScan.nextLine();
@@ -56,7 +56,7 @@ public class HotelRoomTax {
 		double totalIncome = 0;
 
 		
-		// A while scanner was used to make sure that the file reader's values were imported into the application.
+		// A while loop for the scanner was used to make sure that the file reader's values were imported into the application.
 		while(scanner.hasNext()) {
 			roomType = scanner.next();
 			numberOfRooms = scanner.nextInt();
@@ -72,7 +72,7 @@ public class HotelRoomTax {
             System.out.printf("\nRoom Type: %s, Bookings: %s, Room Price: £%.2f, Income:£%.2f, Tax: £%.2f " ,roomType,numberOfRooms,costPerRoom, preTaxCost,totalRoomTax);
             
 	}
-		// The while scanner we used earlier is closed to end the loop.
+		// The while loop for the scanner we used earlier is closed to end the loop.
 		scanner.close();
 		
 		//The Total Income and Tax is printed out below: 
