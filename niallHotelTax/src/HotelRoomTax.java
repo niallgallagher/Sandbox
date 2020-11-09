@@ -73,7 +73,7 @@ public class HotelRoomTax {
             System.out.printf("\nRoom Type: %s, Bookings: %s, Room Price: £%.2f, Income:£%.2f, Tax: £%.2f " ,roomType,numberOfRooms,costPerRoom, preTaxCost,totalRoomTax);
             
 	}
-		// The Scanner we used for the while loop was used was closed.
+		// The Scanner we used for the while loop was closed.
 		scanner.close();
 		
 		//The Total Income and Tax is printed out below: 
