@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.ljmu.ng.hotelbooking;
 
 import java.util.List;
@@ -10,9 +7,8 @@ import java.util.Scanner;
  * @author niall
  *
  */
-public class ViewReservations {	
-	
-	private static String emailAddress;
+public class ViewReservations {
+
 	private static boolean foundReservation = false;
 
 	public ViewReservations() {}
@@ -39,7 +35,7 @@ public class ViewReservations {
 			case 3 : {
 				System.out.print("Email address to look up: ");
 				Scanner emailAddressScanner = new Scanner(System.in);
-				emailAddress = emailAddressScanner.next();
+				String emailAddress = emailAddressScanner.next();
 				getRevervationsByEmailAddress(emailAddress);
 				emailAddressScanner.close();
 				break;
@@ -51,16 +47,28 @@ public class ViewReservations {
 
 	private static void getAllRoomDetails() {
 		System.out.println("You have called the getAllRoomDetails method");
+		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
+		System.out.print("Room No.   Type          Balcony?        Lounge?       Price        Reservered?\n");
+		for(HotelRoom h: hotelRooms) {
+			System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " + h.price + "          " + h.isBooked + "\n");
+		}
+
 	}
 
 	private static void getAllReservedRoomDetails() {
 		System.out.println("You have called the getAllReservedRoomDetails method");
+		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
+		for (HotelRoom h : hotelRooms) {
+			if (h.isBooked) {
+				System.out.print(h.toString() + "\n\n");
+			}
+		}
 	}
 
 
 	private static void getRevervationsByEmailAddress(String emailAddress) {
 
-		List<HotelRoom> hotelRooms = ReadMyFile.getHotelRoomList();
+		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
 
 		for(HotelRoom hotelRoom: hotelRooms) {
 			if(hotelRoom.reservationDetail.equalsIgnoreCase(emailAddress)) {

@@ -3,9 +3,7 @@
  */
 package com.ljmu.ng.hotelbooking;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +12,7 @@ import java.util.Scanner;
  * @author niall
  *
  */
-public class ReadMyFile {
+public class FileOperations {
 	
 	private static String fileName = "rooms.txt";
 	private static File file;
@@ -26,7 +24,7 @@ public class ReadMyFile {
 	private static boolean hasLounge;
 	private static boolean isReserved;
 	
-	public ReadMyFile() {}
+	public FileOperations() {}
 	
 	public static List<HotelRoom> getHotelRoomList() {
 		try {
@@ -54,6 +52,12 @@ public class ReadMyFile {
 		}		
 		
 		return hotelRooms;
+	}
+
+	public static void updateFile(String reservationDetails) throws IOException {
+
+		FileWriter fileWriter = new FileWriter(fileName);
+
 	}
 
 }

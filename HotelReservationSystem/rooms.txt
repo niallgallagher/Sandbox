@@ -11,7 +11,7 @@
 301 Single 33.50 true true free
 302 Single 33.50 true true free
 303 Suite 60.00 true true free
-304 Suite 60.00 true true free
+304 Suite 60.00 true true walldavid@gmail.com
 305 Suite 60.00 true true free
 306 Double 37.50 true true free
 307 Double 37.50 true true free
