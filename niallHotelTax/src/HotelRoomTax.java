@@ -77,7 +77,7 @@ public class HotelRoomTax {
 		scanner.close();
 		
 		//The Total Income and Tax is printed out below: 
-		System.out.printf("\nTotal Income: £%.2f",totalIncome);
+		System.out.printf("\n\nTotal Income: £%.2f",totalIncome);
 		System.out.printf("\nTotal Tax: £%.2f",totalTax);
 
   }
