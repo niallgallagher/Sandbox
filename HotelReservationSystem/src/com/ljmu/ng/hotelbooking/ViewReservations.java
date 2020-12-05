@@ -45,7 +45,7 @@ public class ViewReservations {
 
 	}
 
-	private static void getAllRoomDetails() {
+	public static void getAllRoomDetails() {
 		System.out.println("You have called the getAllRoomDetails method");
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
 		System.out.print("Room No.   Type          Balcony?        Lounge?       Price        Reservered?\n");
@@ -56,17 +56,29 @@ public class ViewReservations {
 	}
 
 	private static void getAllReservedRoomDetails() {
-		System.out.println("You have called the getAllReservedRoomDetails method");
+		System.out.println("The is a list of all currently reserved rooms\n");
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
+		System.out.print("Room No.   Type          Balcony?        Lounge?       Price        Reservered?\n");
 		for (HotelRoom h : hotelRooms) {
 			if (h.isBooked) {
-				System.out.print(h.toString() + "\n\n");
+				System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " + h.price + "          " + h.isBooked + "\n");
+			}
+		}
+	}
+
+	public static void getAllFreeRooms() {
+		System.out.println("The is a list of all currently free rooms\n");
+		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
+		System.out.print("Room No.   Type          Balcony?        Lounge?       Price\n");
+		for (HotelRoom h : hotelRooms) {
+			if (!h.isBooked) {
+				System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " + h.price +"\n");
 			}
 		}
 	}
 
 
-	private static void getRevervationsByEmailAddress(String emailAddress) {
+	public static void getRevervationsByEmailAddress(String emailAddress) {
 
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
 

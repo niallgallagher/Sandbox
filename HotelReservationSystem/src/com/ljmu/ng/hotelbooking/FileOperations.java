@@ -23,6 +23,8 @@ public class FileOperations {
 	private static boolean hasBalcony;
 	private static boolean hasLounge;
 	private static boolean isReserved;
+
+	private static final String FREE = "free";
 	
 	public FileOperations() {}
 	
@@ -45,7 +47,7 @@ public class FileOperations {
 			if(line[3].equals("true")) { hasBalcony = true; } else { hasBalcony = false; }
 			if(line[4].equals("true")) { hasLounge = true; } else { hasLounge = false; }
 			String reservationDetail = line[5];
-			if(reservationDetail.equalsIgnoreCase("free")) { isReserved = false; } else { isReserved = true; }
+			if(reservationDetail.equalsIgnoreCase(FREE)) { isReserved = false; } else { isReserved = true; }
 
 			HotelRoom hotelRoom = new HotelRoom(roomNum, roomType, hasLounge, hasBalcony, roomPrice, isReserved, reservationDetail);
 			hotelRooms.add(hotelRoom);
