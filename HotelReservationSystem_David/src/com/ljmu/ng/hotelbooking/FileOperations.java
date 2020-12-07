@@ -5,7 +5,9 @@ package com.ljmu.ng.hotelbooking;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -55,11 +57,25 @@ public class FileOperations {
 		
 		return hotelRooms;
 	}
-
-	public static void updateFile(String reservationDetails) throws IOException {
-
-		FileWriter fileWriter = new FileWriter(fileName);
-
+	
+	public static Map<String,String> convertFiletoString(String fileName, int roomNum) throws FileNotFoundException {
+		Map<String, String> fileContentsMap = new HashMap<>();
+		String fileString = "";
+		String lineToReplace = "";
+		Scanner sc = new Scanner(new File(fileName));
+        //instantiating the StringBuffer class
+        StringBuffer buffer = new StringBuffer();
+        //Reading lines of the file and appending them to StringBuffer
+        while (sc.hasNextLine()) {
+        	String line = sc.nextLine();
+        	String[] lineArray = line.split(" ");
+        	buffer.append(line + System.lineSeparator());
+        	if(lineArray[0].equals(String.valueOf(roomNum))) {
+        		lineToReplace = line;
+        	}
+        }
+        fileString = buffer.toString();
+        fileContentsMap.put(lineToReplace, fileString);
+		return fileContentsMap;
 	}
-
 }

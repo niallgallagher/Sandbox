@@ -3,6 +3,12 @@
  */
 package com.ljmu.ng.hotelbooking;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -13,9 +19,9 @@ public class ReserveRoom {
 	
 	public ReserveRoom() {}
 	
-	public static void reserveARoom() {
+	public static void reserveARoom() throws IOException {
 
-		System.out.println("You have selected, 'Reserve a Room");
+		System.out.println("You have selected, 'Reserve a Room' ");
 
 		String balconyScanAnswer = "";
 		boolean isValidBalconyAnswer = false;
@@ -67,10 +73,28 @@ public class ReserveRoom {
 
 	}
 	
-	private static void reserveRoom(int roomNumber, String emailAddress) {
-		//Reserve the room by reading the line for the room you are booking
-		//Use a fileWriter to replace that line with a new line that now contains
-		//the email address instead of the work free
+	private static void reserveRoom(int roomNumber, String emailAddress) throws IOException {
+		String fileName = "rooms.txt";
+		Map<String,String> fileData = FileOperations.convertFiletoString(fileName, roomNumber); //this replaces the full file reader/buffer operations and moves to the FileOperations class
+		String oldLine = "";
+		String newLine = "";
+		String fileDataString = "";
+		
+		for(String lineToReplace: fileData.keySet()) {
+			oldLine = lineToReplace;
+			fileDataString = fileData.get(lineToReplace);
+		}
+        
+		//You need to be take the old line and just replace the word 'free' with the email address to created the new line
+		//and then replace the full old line with the new line
+		
+		
+		
+        String newFileData = fileDataString.replaceAll(oldLine, newLine);
+        
+        FileWriter writer = new FileWriter(fileName);
+        System.out.println("new room: "+ fileData);
+        writer.append(newFileData);
+        writer.flush();
 	}
-
 }

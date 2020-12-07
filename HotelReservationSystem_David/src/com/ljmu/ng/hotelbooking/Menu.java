@@ -3,6 +3,7 @@
  */
 package com.ljmu.ng.hotelbooking;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -41,7 +42,12 @@ public class Menu {
 			
 		switch (choice) {
 			case "1" : {
-				ReserveRoom.reserveARoom();
+				try {
+					ReserveRoom.reserveARoom();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			}
 			
@@ -56,7 +62,7 @@ public class Menu {
 			}
 			
 			case "Q" : {
-				System.out.print("Goodbye");
+				System.out.print("Goodbye!");
 				break;
 			}
 			
