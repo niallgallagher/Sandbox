@@ -13,11 +13,12 @@ public class Utils {
 	
 	
 	public static boolean inputChecker(String input, String inputType) {
-		
+		System.out.println("You have entered the inputChecker method");		
 		switch(inputType) {
 		
 			case "YesOrNo" : {
 				if(input.equalsIgnoreCase(YES) || input.equalsIgnoreCase(NO) ) {
+					System.out.println("You entered a valid value");		
 					return true;
 				} else {
 					return false;					

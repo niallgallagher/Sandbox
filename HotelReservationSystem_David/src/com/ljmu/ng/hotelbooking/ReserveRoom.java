@@ -14,6 +14,8 @@ import java.util.Scanner;
 /**
  * @author niall
  *
+ *The class below was used to create the booking system for the program.
+ *
  */
 public class ReserveRoom {
 	
@@ -22,45 +24,48 @@ public class ReserveRoom {
 	public static void reserveARoom() throws IOException {
 
 		System.out.println("You have selected, 'Reserve a Room' ");
-
+		
+// The code below asks whether the user wants a balcony using a 'while' loop.
 		String balconyScanAnswer = "";
 		boolean isValidBalconyAnswer = false;
 		Scanner balconyScan = new Scanner(System.in);
 		while(!isValidBalconyAnswer) {
 			System.out.print("Do you need a balcony? Y/N: ");
 			balconyScanAnswer = balconyScan.next();
+			System.out.print("You chose [" + balconyScanAnswer + "]");
 			if(Utils.inputChecker(balconyScanAnswer, "YesOrNo")) {
 				isValidBalconyAnswer = true;
 			}
-		}
-		balconyScan.close();
-
+		}		
+//Like the code above we do the same but we ask the user whether they want a lounge.	
 		String loungeScanAnswer = ""; 
 		boolean isValidLoungeAnswer = false; 
 		Scanner loungeScan = new Scanner(System.in); 
 		while(!isValidLoungeAnswer) {
 		  System.out.print("Do you need a Lounge? Y/N: ");
-		  loungeScanAnswer = loungeScan.next(); 
+		  loungeScanAnswer = loungeScan.next();
+		  System.out.print("You chose [" + loungeScanAnswer + "]");
+
 		  if(Utils.inputChecker(loungeScanAnswer, "YesOrNo")) {
 			  isValidLoungeAnswer = true; 
 		  } 
 		}
-		loungeScan.close();
-	
+// The system shows all the available rooms.	
 		System.out.println("These are the available rooms for reservation\n");
 		ViewReservations.getAllFreeRooms();
 
-		
+//The room is going to be booked by the user using their email address.
+//The Scanner will read the user input and the while loop will show the available rooms.
 		boolean isValidRoom = false;
-		int roomChoice = 0;
+		String roomChoice = "";
+		Scanner roomChoiceScanner = new Scanner(System.in);
+
 		while(!isValidRoom) {
 			System.out.print("Please choose the room you want to reserve: ");
-			Scanner roomChoiceScanner = new Scanner(System.in);
-			roomChoice = roomChoiceScanner.nextInt();
+			roomChoice = roomChoiceScanner.next();
 			if(Utils.inputChecker(roomChoice, "RoomNum")) {
 				isValidRoom = true;
 			}
-			roomChoiceScanner.close();
 		}
 		
 		System.out.print("Email Address for Reservation: ");
@@ -69,11 +74,14 @@ public class ReserveRoom {
 		
 		reserveRoom(roomChoice, emailAddress);
 
-
+		balconyScan.close();
+		loungeScan.close();
+		roomChoiceScanner.close();
+		emailAddressScanner.close();
 
 	}
 	
-	private static void reserveRoom(int roomNumber, String emailAddress) throws IOException {
+	private static void reserveRoom(String roomNumber, String emailAddress) throws IOException {
 		String fileName = "rooms.txt";
 		Map<String,String> fileData = FileOperations.convertFiletoString(fileName, roomNumber); //this replaces the full file reader/buffer operations and moves to the FileOperations class
 		String oldLine = "";

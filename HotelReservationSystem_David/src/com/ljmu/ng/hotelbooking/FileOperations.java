@@ -12,15 +12,17 @@ import java.util.Scanner;
 
 /**
  * @author niall
- *
+ * The class below was used to help create different operations for the program.
  */
 public class FileOperations {
-	
+
+//The variables were declared below to read the file 'rooms.txt'.
 	private static String fileName = "rooms.txt";
 	private static File file;
 	public static FileReader fileReader;
 	public static Scanner fileScanner;
 	
+// The array below was created to separate the columns on the word document.
 	private static List<HotelRoom> hotelRooms = new ArrayList<>();
 	private static boolean hasBalcony;
 	private static boolean hasLounge;
@@ -29,7 +31,7 @@ public class FileOperations {
 	private static final String FREE = "free";
 	
 	public FileOperations() {}
-	
+//**********************************	
 	public static List<HotelRoom> getHotelRoomList() {
 		try {
 			fileReader = new FileReader(fileName);
@@ -37,7 +39,8 @@ public class FileOperations {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+//*********************************
 		fileScanner = new Scanner(fileReader);
 		
 		while(fileScanner.hasNext()) {
@@ -58,7 +61,7 @@ public class FileOperations {
 		return hotelRooms;
 	}
 	
-	public static Map<String,String> convertFiletoString(String fileName, int roomNum) throws FileNotFoundException {
+	public static Map<String,String> convertFiletoString(String fileName, String roomNum) throws FileNotFoundException {
 		Map<String, String> fileContentsMap = new HashMap<>();
 		String fileString = "";
 		String lineToReplace = "";
@@ -70,7 +73,7 @@ public class FileOperations {
         	String line = sc.nextLine();
         	String[] lineArray = line.split(" ");
         	buffer.append(line + System.lineSeparator());
-        	if(lineArray[0].equals(String.valueOf(roomNum))) {
+        	if(lineArray[0].equals(roomNum)) {
         		lineToReplace = line;
         	}
         }

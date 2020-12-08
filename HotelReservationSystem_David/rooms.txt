@@ -1,4 +1,4 @@
-101 Single 23.50 false false free
+
 102 Single 23.50 false false free
 103 Double 27.50 false false free
 104 Double 27.50 false false free
