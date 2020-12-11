@@ -57,7 +57,11 @@ public class Menu {
 			}
 			
 			case "2" : {
-				CancelRoomReservation.cancelRoomReservation();
+				try {
+					CancelRoomReservation.cancelRoomReservation();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				break;
 			}
 			
