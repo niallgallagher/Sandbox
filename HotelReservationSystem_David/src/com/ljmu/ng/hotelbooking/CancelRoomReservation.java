@@ -3,6 +3,7 @@
  */
 package com.ljmu.ng.hotelbooking;
 
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class CancelRoomReservation {
 	public CancelRoomReservation() {}
 	
 //The method "cancelRoomReservation" was declared below.
-	public static void cancelRoomReservation() {
+	public static void cancelRoomReservation() throws IOException {
 		
 //The program reads out instructions for the user to follow, 
 //The user responds with their email to cancel the reservation.
@@ -51,9 +52,9 @@ public class CancelRoomReservation {
 		cancelReservationScanner.close();
 	}
 	
-	private static void cancelReservation(String emailAddress) {
+	private static void cancelReservation(String emailAddress) throws IOException {
 			String fileName = "rooms.txt";
-			Map<String,String> fileData = FileOperations.convertFileForReservation(fileName, roomNumber); //this replaces the full file reader/buffer operations and moves to the FileOperations class
+			Map<String,String> fileData = FileOperations.convertFileForCancellation(fileName, emailAddress); //this replaces the full file reader/buffer operations and moves to the FileOperations class
 			String oldLine = "";
 			String newLine = "";
 			String fileDataString = "";

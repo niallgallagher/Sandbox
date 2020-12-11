@@ -62,7 +62,7 @@ public class FileOperations {
 		return hotelRooms;
 	}
 	
-	public static Map<String,String> convertFileForReservation(String fileName) throws FileNotFoundException {
+	public static Map<String,String> convertFileForReservation(String fileName, String roomNum) throws FileNotFoundException {
 		Map<String, String> fileContentsMap = new HashMap<>();
 		String fileString = "";
 		String lineToReplace = "";
@@ -81,5 +81,10 @@ public class FileOperations {
         fileString = buffer.toString();
         fileContentsMap.put(lineToReplace, fileString);
 		return fileContentsMap;
+	}
+
+	public static Map<String,String> convertFileForCancellation(String fileName, String emailAddress) throws FileNotFoundException {
+
+		return null;
 	}
 }
