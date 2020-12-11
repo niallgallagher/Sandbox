@@ -2,6 +2,8 @@ package com.ljmu.ng.hotelbooking;
 
 import java.util.List;
 
+//The 'Utils' class was used 
+
 public class Utils {
 	
 	private static final String YES = "Y";

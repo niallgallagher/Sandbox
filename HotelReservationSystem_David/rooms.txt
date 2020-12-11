@@ -1,5 +1,4 @@
-
-102 Single 23.50 false false free
+102 Single 23.50 false false walldavid@gmail.com
 103 Double 27.50 false false free
 104 Double 27.50 false false free
 105 Double 27.50 false false free
@@ -11,7 +10,7 @@
 301 Single 33.50 true true free
 302 Single 33.50 true true free
 303 Suite 60.00 true true free
-304 Suite 60.00 true true free
+304 Suite 60.00 true true debswall75@gmail.com
 305 Suite 60.00 true true free
 306 Double 37.50 true true free
 307 Double 37.50 true true free

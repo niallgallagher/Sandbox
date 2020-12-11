@@ -46,6 +46,7 @@ public class FileOperations {
 		while(fileScanner.hasNext()) {
 			//System.out.println(fileScanner.nextLine());
 			String[] line = fileScanner.nextLine().split(" ");
+			System.out.print("This is the line: " + line[0]);
 			int roomNum = Integer.valueOf(line[0]);
 			String roomType = line[1];
 			double roomPrice = Double.valueOf(line[2]);
@@ -61,7 +62,7 @@ public class FileOperations {
 		return hotelRooms;
 	}
 	
-	public static Map<String,String> convertFiletoString(String fileName, String roomNum) throws FileNotFoundException {
+	public static Map<String,String> convertFileForReservation(String fileName) throws FileNotFoundException {
 		Map<String, String> fileContentsMap = new HashMap<>();
 		String fileString = "";
 		String lineToReplace = "";

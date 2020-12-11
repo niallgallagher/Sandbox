@@ -3,6 +3,9 @@
  */
 package com.ljmu.ng.hotelbooking;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -49,6 +52,28 @@ public class CancelRoomReservation {
 	}
 	
 	private static void cancelReservation(String emailAddress) {
+			String fileName = "rooms.txt";
+			Map<String,String> fileData = FileOperations.convertFileForReservation(fileName, roomNumber); //this replaces the full file reader/buffer operations and moves to the FileOperations class
+			String oldLine = "";
+			String newLine = "";
+			String fileDataString = "";
+			
+			for(String lineToReplace: fileData.keySet()) {
+				oldLine = lineToReplace;
+				fileDataString = fileData.get(lineToReplace);
+			}
+	//*************************************
+			
+			newLine = oldLine.replace(emailAddress,"free");
+		
+			//You need to be take the old line and just replace the word 'free' with the email address to created the new line
+			//and then replace the full old line with the new line		
+	        String newFileData = fileDataString.replaceAll(oldLine, newLine);
+	        
+	        FileWriter writer = new FileWriter(fileName);
+	        System.out.println("new room: "+ fileData);
+	        writer.append(newFileData);
+	        writer.flush();
 		
 	}
 }

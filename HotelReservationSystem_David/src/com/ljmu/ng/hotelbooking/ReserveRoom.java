@@ -3,8 +3,11 @@
  */
 package com.ljmu.ng.hotelbooking;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -83,7 +86,7 @@ public class ReserveRoom {
 	
 	private static void reserveRoom(String roomNumber, String emailAddress) throws IOException {
 		String fileName = "rooms.txt";
-		Map<String,String> fileData = FileOperations.convertFiletoString(fileName, roomNumber); //this replaces the full file reader/buffer operations and moves to the FileOperations class
+		Map<String,String> fileData = FileOperations.convertFileForReservation(fileName, roomNumber); //this replaces the full file reader/buffer operations and moves to the FileOperations class
 		String oldLine = "";
 		String newLine = "";
 		String fileDataString = "";
@@ -92,17 +95,19 @@ public class ReserveRoom {
 			oldLine = lineToReplace;
 			fileDataString = fileData.get(lineToReplace);
 		}
-        
+//*************************************
+		
+		newLine = oldLine.replace("free", emailAddress);
+	
 		//You need to be take the old line and just replace the word 'free' with the email address to created the new line
-		//and then replace the full old line with the new line
-		
-		
-		
+		//and then replace the full old line with the new line		
         String newFileData = fileDataString.replaceAll(oldLine, newLine);
         
         FileWriter writer = new FileWriter(fileName);
         System.out.println("new room: "+ fileData);
         writer.append(newFileData);
         writer.flush();
+        
+       System.out.println("Room " + roomNumber + " has been reserved for " + emailAddress);
 	}
 }
