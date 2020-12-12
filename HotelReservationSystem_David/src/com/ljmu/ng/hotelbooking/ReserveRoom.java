@@ -77,7 +77,7 @@ public class ReserveRoom {
       Scanner roomChoiceScanner = new Scanner(System.in);
 
       while(!isValidRoom) {
-         System.out.print("Please choose the room you want to reserve: ");
+         System.out.print("Please choose the room number you want to reserve: ");
          roomChoice = roomChoiceScanner.next();
          if(Utils.inputChecker(roomChoice, "RoomNum")) {
             isValidRoom = true;

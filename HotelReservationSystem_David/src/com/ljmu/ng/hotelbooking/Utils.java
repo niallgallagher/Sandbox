@@ -13,9 +13,9 @@ public class Utils {
 	public Utils() {}
 	
 	
-	
+	//Any line i print doesn't make sense for room reservation. 
 	public static boolean inputChecker(String input, String inputType) {
-		System.out.println("You have entered the inputChecker method");		
+		System.out.println("");		
 		switch(inputType) {
 		
 			case "YesOrNo" : {

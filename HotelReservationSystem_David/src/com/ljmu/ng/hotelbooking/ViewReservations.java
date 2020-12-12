@@ -50,7 +50,6 @@ public class ViewReservations {
 				break;
 			}
 		}
-//The switch was closed so that the system can move on.
 		choice.close();
 
 	}
@@ -58,7 +57,7 @@ public class ViewReservations {
 //The 'getAllRoomDetails' method below gets all the rooms from the file 'rooms.txt' using an array 'hotelRooms'.
 //The array can be viewed more clearly in the class 'FileOperations.java'
 	public static void getAllRoomDetails() {
-		System.out.println("You have called the getAllRoomDetails method");
+		System.out.println("You have selected 'View All Rooms': ");
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
 		System.out.print("Room No.   Type          Balcony?        Lounge?       Price        Reservered?\n");
 		for(HotelRoom h: hotelRooms) {
@@ -69,7 +68,7 @@ public class ViewReservations {
 //The'getAllReservedRoomDetails' method uses the same array mentioned above.
 // The for loop runs through the hotel rooms and prints out the rooms that are "booked".
 	private static void getAllReservedRoomDetails() {
-		System.out.println("The is a list of all currently reserved rooms\n");
+		System.out.println("This is the list of all rooms currently reserved.\n");
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
 		System.out.print("Room No.   Type          Balcony?        Lounge?       Price        Reservered?\n");
 		for (HotelRoom h : hotelRooms) {
@@ -80,8 +79,10 @@ public class ViewReservations {
 	}
 //The'getAllFreeRooms' method uses the same array mentioned above.
 // The for loop runs through the hotel rooms and prints out the rooms that are "free".
-	public static void getAllFreeRooms() {
-		System.out.println("The is a list of all currently free rooms\n");
+	
+		//The method seems to ask for email address and I don't know Why? Also It prints email reservation twice.
+	    public static void getAllFreeRooms() {
+		System.out.println("This is the list of all rooms currently free.\n");
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
 		System.out.print("Room No.   Type          Balcony?        Lounge?       Price\n");
 		for (HotelRoom h : hotelRooms) {
@@ -90,8 +91,7 @@ public class ViewReservations {
 			}
 		}
 	}
-	
-	public static void getAllFreeRoomsMatchingCriteria(String type, boolean balcony, boolean lounge) {
+	   public static void getAllFreeRoomsMatchingCriteria(String type, boolean balcony, boolean lounge) {
 	   String balconyString = Boolean.toString(balcony);
 	   String loungeString = Boolean.toString(lounge);
 	   System.out.println("The is a list of all currently free rooms\n");
@@ -101,14 +101,13 @@ public class ViewReservations {
 	      if (!h.isBooked && h.roomType.equalsIgnoreCase(type) && Boolean.toString(h.balcony).equals(balconyString) 
 	    		  && Boolean.toString(h.lounge).equals(loungeString)) {
 	    	  
-	    	  		System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + 
-	    	  		h.lounge + "           " + h.price +"\n");
+	    	  		System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " + h.price +"\n");
 	      }
 	   }
 	}
 
-//The method below gets the booked rooms via email address and prints out the rooms.
-	public static String getRevervationsByEmailAddress(String emailAddress) {
+	//The method below gets the booked rooms via email address and prints out the rooms.
+		public static String getRevervationsByEmailAddress(String emailAddress) {
 
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
 		String roomNum = "";

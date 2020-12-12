@@ -10,8 +10,8 @@
 205 Double 27.50 true false free
 301 Single 33.50 true true adam@wall.com
 302 Single 33.50 true true free
-303 Suite 60.00 true true free
+303 Suite 60.00 true true niallgallagher2000@gmail.com
 304 Suite 60.00 true true debswall75@gmail.com
 305 Suite 60.00 true true free
 306 Double 37.50 true true free
-307 Double 37.50 true true niallgallagher2000@gmail.com
+307 Double 37.50 true true free

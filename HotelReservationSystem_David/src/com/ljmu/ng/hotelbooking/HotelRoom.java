@@ -50,11 +50,11 @@ public class HotelRoom {
 
 	@Override
     public String toString() {
-        return "Room Number [" + roomNum + "]\n" +
-                "Room Type [" + roomType + "]\n" +
-                "Has Balcony? [" + balcony + "]\n" +
-                "Has Lounge? [" + lounge + "]\n" +
-                "Room Price [£" + price + "]\n" +
-                "Details [" + reservationDetail + "]";
+        return "Room Number - [" + roomNum + "]\n" +
+                "Room Type - [" + roomType + "]\n" +
+                "Has Balcony? - [" + balcony + "]\n" +
+                "Has Lounge? - [" + lounge + "]\n" +
+                "Room Price - [£" + price + "]\n" +
+                "Details - [" + reservationDetail;
     }
 }

@@ -15,14 +15,14 @@ import java.util.Scanner;
  * The class below was used to help create different operations for the program.
  */
 public class FileOperations {
-
-//The variables were declared below to read the file 'rooms.txt'.
+	
+	
 	private static String fileName = "rooms.txt";
 	private static File file;
 	public static FileReader fileReader;
 	public static Scanner fileScanner;
 	
-// The array below was created to separate the columns on the word document.
+	//The array below was created to separate the columns on the word document.
 	private static List<HotelRoom> hotelRooms = new ArrayList<>();
 	private static boolean hasBalcony;
 	private static boolean hasLounge;
@@ -31,16 +31,14 @@ public class FileOperations {
 	private static final String FREE = "free";
 	
 	public FileOperations() {}
-//**********************************	
 	public static List<HotelRoom> getHotelRoomList() {
 		try {
 			fileReader = new FileReader(fileName);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-//*********************************
+		//The scanner below is checking whether the user wants a balcony or lounge and if so caters for their room demands.
 		fileScanner = new Scanner(fileReader);
 		
 		while(fileScanner.hasNext()) {
@@ -59,7 +57,8 @@ public class FileOperations {
 		
 		return hotelRooms;
 	}
-	
+	//The below method is telling the system which line needs to be printed whether its for reservation or cancellation
+	//The array is being used to edit the file.
 	public static Map<String,String> convertFile(String fileName, String roomNum, String emailAddress, String operation) throws FileNotFoundException {
 		Map<String, String> fileContentsMap = new HashMap<>();
 		String fileString = "";

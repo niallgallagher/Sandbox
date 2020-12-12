@@ -17,16 +17,14 @@ public class Menu {
 	
 	public Menu() {}
 	
-//The method "GenerateMenu" is declared below to help develop an interactive menu for the user.
+	//The method "GenerateMenu" is declared below to help develop an interactive menu for the user.
 	public static void GenerateMenu() {
 		System.out.print("--Room Booking System--");
 		String choice = "";
 		
-//The Scanner is used to read the users inputs.		
 		Scanner userChoice = new Scanner(System.in);
 		boolean isValidChoice = false;
 		
-//The while loop helps the program run all possible options that the user inputs. 		
 		while(!isValidChoice) {
 			System.out.println("\n\n--Main Menu--");
 			System.out.println("1 - Reserve Room");
@@ -37,7 +35,7 @@ public class Menu {
 			
 			choice = userChoice.next();
 			
-//The 'if/else statement' is used to ensure the user places a correct input.		
+			//The 'if/else statement' is used to ensure the user places a correct input.		
 			if(choice.equalsIgnoreCase("1") || choice.equalsIgnoreCase("2") || choice.equalsIgnoreCase("3")
 					|| choice.equalsIgnoreCase("Q")) {
 				isValidChoice = true;
@@ -45,7 +43,7 @@ public class Menu {
 				System.out.print("Please choose a Valid option");
 			}
 		}
-//The "switch" function was used so that the users input would go straight to the method that they requested.
+		//The "switch" function was used so that the users input would go straight to the method that they requested.
 		switch (choice) {
 			case "1" : {
 				try {
