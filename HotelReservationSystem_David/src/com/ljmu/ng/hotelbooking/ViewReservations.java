@@ -90,15 +90,33 @@ public class ViewReservations {
 			}
 		}
 	}
+	
+	public static void getAllFreeRoomsMatchingCriteria(String type, boolean balcony, boolean lounge) {
+	   String balconyString = Boolean.toString(balcony);
+	   String loungeString = Boolean.toString(lounge);
+	   System.out.println("The is a list of all currently free rooms\n");
+	   List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
+	   System.out.print("Room No.   Type          Balcony?        Lounge?       Price\n");
+	   for (HotelRoom h : hotelRooms) {
+	      if (!h.isBooked && h.roomType.equalsIgnoreCase(type) && Boolean.toString(h.balcony).equals(balconyString) 
+	    		  && Boolean.toString(h.lounge).equals(loungeString)) {
+	    	  
+	    	  		System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + 
+	    	  		h.lounge + "           " + h.price +"\n");
+	      }
+	   }
+	}
 
 //The method below gets the booked rooms via email address and prints out the rooms.
-	public static void getRevervationsByEmailAddress(String emailAddress) {
+	public static String getRevervationsByEmailAddress(String emailAddress) {
 
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
-
+		String roomNum = "";
+		
 		for(HotelRoom hotelRoom: hotelRooms) {
 			if(hotelRoom.reservationDetail.equalsIgnoreCase(emailAddress)) {
-				System.out.print("Reservation Details for " + emailAddress + " " + hotelRoom.toString() + "]");
+				roomNum = String.valueOf(hotelRoom.roomNum);
+				System.out.print("\nReservation Details for " + emailAddress + "\n" + hotelRoom.toString() + "]\n");
 				foundReservation = true;
 			}
 		}
@@ -106,5 +124,7 @@ public class ViewReservations {
 		if(!foundReservation) {
 			System.out.println("No reservation found for " + emailAddress);
 		}
+		
+		return roomNum;
 	}
 }

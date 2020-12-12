@@ -1,8 +1,11 @@
 package com.ljmu.ng.hotelbooking;
 
+/**
+ * @author niall
+ *
+ */
 public class HotelRoom {
 
-// My variables for the program is declared below.
 	public int roomNum;
 	public String roomType;
 	public boolean balcony;
@@ -11,7 +14,6 @@ public class HotelRoom {
 	public boolean isBooked;
 	public String reservationDetail;
 
-//******** What does the "this."
     public HotelRoom(int roomNum, String roomType, boolean balcony, boolean lounge, double price, boolean isBooked, String reservationDetail) {
         this.roomNum = roomNum;
         this.roomType = roomType;
@@ -21,7 +23,7 @@ public class HotelRoom {
         this.isBooked = isBooked;
         this.reservationDetail = reservationDetail;
     }
-//**********
+
     public int getRoomNum() {
         return roomNum;
     }
@@ -46,7 +48,6 @@ public class HotelRoom {
 		return reservationDetail;
 	}
 
-// ********************************************
 	@Override
     public String toString() {
         return "Room Number [" + roomNum + "]\n" +

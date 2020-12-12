@@ -32,17 +32,17 @@ public class CancelRoomReservation {
 		System.out.print("Email address to look up: ");
 		Scanner emailAddressScanner = new Scanner(System.in);
 		String emailAddress = emailAddressScanner.next();
-		emailAddressScanner.close();
 
-		ViewReservations.getRevervationsByEmailAddress(emailAddress);
+		String roomNum = ViewReservations.getRevervationsByEmailAddress(emailAddress);
+		System.out.print("Room number to cancel: " + roomNum);
 
 //The system confirms that the user wants to cancel their reservation.
 //The 'if/else' statement is used to act on the users response which is read through the scanner.
-		System.out.print("Are you sure you want to cancel reservation? Y/N: ");
+		System.out.print("\n\nAre you sure you want to cancel reservation? Y/N: ");
 		Scanner cancelReservationScanner = new Scanner(System.in);
 		String choice = cancelReservationScanner.next();
 		if(choice.equalsIgnoreCase(YES)) {
-			cancelReservation(emailAddress);
+			cancelReservation(emailAddress, roomNum);
 		} else if (choice.equalsIgnoreCase(NO)) {
 			Menu.GenerateMenu();
 		} else {
@@ -50,20 +50,23 @@ public class CancelRoomReservation {
 		}
 //We close the scanner to make sure that the scanner stops reading.		
 		cancelReservationScanner.close();
+		emailAddressScanner.close();
+
 	}
 	
-	private static void cancelReservation(String emailAddress) throws IOException {
+	private static void cancelReservation(String emailAddress, String roomNum) throws IOException {
 			String fileName = "rooms.txt";
-			Map<String,String> fileData = FileOperations.convertFileForCancellation(fileName, emailAddress); //this replaces the full file reader/buffer operations and moves to the FileOperations class
+			String operation = "cancel";
+			Map<String,String> fileData = FileOperations.convertFile(fileName, roomNum, emailAddress, operation); //this replaces the full file reader/buffer operations and moves to the FileOperations class
 			String oldLine = "";
 			String newLine = "";
 			String fileDataString = "";
 			
 			for(String lineToReplace: fileData.keySet()) {
+				System.out.println("Line to replace[" + lineToReplace + "]");
 				oldLine = lineToReplace;
 				fileDataString = fileData.get(lineToReplace);
 			}
-	//*************************************
 			
 			newLine = oldLine.replace(emailAddress,"free");
 		
@@ -75,6 +78,6 @@ public class CancelRoomReservation {
 	        System.out.println("new room: "+ fileData);
 	        writer.append(newFileData);
 	        writer.flush();
-		
+	        writer.close();
 	}
 }

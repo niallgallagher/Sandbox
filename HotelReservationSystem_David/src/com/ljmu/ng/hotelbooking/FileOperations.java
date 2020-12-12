@@ -44,9 +44,7 @@ public class FileOperations {
 		fileScanner = new Scanner(fileReader);
 		
 		while(fileScanner.hasNext()) {
-			//System.out.println(fileScanner.nextLine());
 			String[] line = fileScanner.nextLine().split(" ");
-			System.out.print("This is the line: " + line[0]);
 			int roomNum = Integer.valueOf(line[0]);
 			String roomType = line[1];
 			double roomPrice = Double.valueOf(line[2]);
@@ -62,7 +60,7 @@ public class FileOperations {
 		return hotelRooms;
 	}
 	
-	public static Map<String,String> convertFileForReservation(String fileName, String roomNum) throws FileNotFoundException {
+	public static Map<String,String> convertFile(String fileName, String roomNum, String emailAddress, String operation) throws FileNotFoundException {
 		Map<String, String> fileContentsMap = new HashMap<>();
 		String fileString = "";
 		String lineToReplace = "";
@@ -74,17 +72,18 @@ public class FileOperations {
         	String line = sc.nextLine();
         	String[] lineArray = line.split(" ");
         	buffer.append(line + System.lineSeparator());
-        	if(lineArray[0].equals(roomNum)) {
-        		lineToReplace = line;
-        	}
+        	if(operation.equals("reserve")) {
+        		if(lineArray[0].equals(roomNum)) {
+        			lineToReplace = line;
+            	}        		
+        	} else if(operation.equals("cancel")) {
+        		if(lineArray[5].equals(emailAddress)) {
+        			lineToReplace = line;
+        		}
+        	}        	
         }
         fileString = buffer.toString();
         fileContentsMap.put(lineToReplace, fileString);
 		return fileContentsMap;
-	}
-
-	public static Map<String,String> convertFileForCancellation(String fileName, String emailAddress) throws FileNotFoundException {
-
-		return null;
 	}
 }
