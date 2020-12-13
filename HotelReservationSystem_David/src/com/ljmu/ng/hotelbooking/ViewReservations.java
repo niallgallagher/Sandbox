@@ -14,7 +14,6 @@ public class ViewReservations {
 
 	public ViewReservations() {}
 	
-//The method 'viewReservations' will allow the user to view their reservations.
 	public static void viewReservations() {
 		System.out.println("**** View Reservations ****");
 		
@@ -24,8 +23,8 @@ public class ViewReservations {
 				+ "4. Specific booking by Email Address\n\n ");
 		int ans = choice.nextInt();
 		
-// I used a switch option to give the user variety in whether they want to view reserved rooms, empty rooms or all rooms.
-// I allowed the user an option to view their booking by entering their email address.
+		// I used a switch option to give the user variety in whether they want to view reserved rooms, empty rooms or all rooms.
+		// I allowed the user an option to view their booking by entering their email address.
 		switch(ans) {
 			case 1 : {
 				getAllRoomDetails();
@@ -54,8 +53,8 @@ public class ViewReservations {
 
 	}
 
-//The 'getAllRoomDetails' method below gets all the rooms from the file 'rooms.txt' using an array 'hotelRooms'.
-//The array can be viewed more clearly in the class 'FileOperations.java'
+	//The 'getAllRoomDetails' method below gets all the rooms from the file 'rooms.txt' using an array 'hotelRooms'.
+	//The array can be viewed more clearly in the class 'FileOperations.java'
 	public static void getAllRoomDetails() {
 		System.out.println("You have selected 'View All Rooms': ");
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
@@ -65,8 +64,7 @@ public class ViewReservations {
 		}
 
 	}
-//The'getAllReservedRoomDetails' method uses the same array mentioned above.
-// The for loop runs through the hotel rooms and prints out the rooms that are "booked".
+	// The for loop runs through the hotel rooms and prints out the rooms that are "booked".
 	private static void getAllReservedRoomDetails() {
 		System.out.println("This is the list of all rooms currently reserved.\n");
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
@@ -77,8 +75,7 @@ public class ViewReservations {
 			}
 		}
 	}
-//The'getAllFreeRooms' method uses the same array mentioned above.
-// The for loop runs through the hotel rooms and prints out the rooms that are "free".
+		// The for loop runs through the hotel rooms and prints out the rooms that are "free".
 	
 		//The method seems to ask for email address and I don't know Why? Also It prints email reservation twice.
 	    public static void getAllFreeRooms() {
@@ -106,7 +103,7 @@ public class ViewReservations {
 	   }
 	}
 
-	//The method below gets the booked rooms via email address and prints out the rooms.
+	   //The method below gets the booked rooms via email address and prints out the rooms.
 		public static String getRevervationsByEmailAddress(String emailAddress) {
 
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
@@ -119,7 +116,7 @@ public class ViewReservations {
 				foundReservation = true;
 			}
 		}
-//The system will allow user to try again if they make a mistake with typing their email address.
+		//The system will allow user to try again if they make a mistake with typing their email address.
 		if(!foundReservation) {
 			System.out.println("No reservation found for " + emailAddress);
 		}

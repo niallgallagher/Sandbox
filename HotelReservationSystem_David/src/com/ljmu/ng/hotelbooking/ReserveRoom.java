@@ -19,11 +19,9 @@ public class ReserveRoom {
    public ReserveRoom() {}
    
    public static void reserveARoom() throws IOException {
-
+	  //Below I ask the users choice of room.
       System.out.println("You have selected, 'Reserve a Room' ");
-      // add comment
-      // more lines
-      // more lines
+      
       String roomTypeChoice = "";
       Scanner roomTypeScanner = new Scanner(System.in);
       boolean roomTypeChoiceIsValid = false;
@@ -31,8 +29,8 @@ public class ReserveRoom {
          System.out.print("What room type do you want? (Single/Double/Suite): ");
          roomTypeChoice = roomTypeScanner.next();
          if(roomTypeChoice.equalsIgnoreCase("single")
-               || roomTypeChoice.equalsIgnoreCase("double")
-               || roomTypeChoice.equalsIgnoreCase("suite")) {
+         || roomTypeChoice.equalsIgnoreCase("double")
+         || roomTypeChoice.equalsIgnoreCase("suite")) {
             roomTypeChoiceIsValid = true;
          }
       }
@@ -51,7 +49,8 @@ public class ReserveRoom {
          }
       }
       if(balconyScanAnswer.equalsIgnoreCase("Y")) { isBalconyRequired = true; }
-//Like the code above we do the same but we ask the user whether they want a lounge.   
+      
+      //Like the code above we do the same but we ask the user whether they want a lounge.   
       String loungeScanAnswer = ""; 
       boolean isValidLoungeAnswer = false; 
       Scanner loungeScan = new Scanner(System.in);
@@ -66,12 +65,12 @@ public class ReserveRoom {
         } 
       }
       if(loungeScanAnswer.equalsIgnoreCase("Y")) { isLoungeRequired = true; }
-// The system shows all the available rooms.   
+      // The system shows all the available rooms.   
       System.out.println("These are the available rooms for reservation\n");
       ViewReservations.getAllFreeRoomsMatchingCriteria(roomTypeChoice, isBalconyRequired, isLoungeRequired);
 
-//The room is going to be booked by the user using their email address.
-//The Scanner will read the user input and the while loop will show the available rooms.
+      //The room is going to be booked by the user using their email address.
+      //The Scanner will read the user input and the while loop will show the available rooms.
       boolean isValidRoom = false;
       String roomChoice = "";
       Scanner roomChoiceScanner = new Scanner(System.in);
@@ -97,11 +96,12 @@ public class ReserveRoom {
       roomTypeScanner.close();
 
    }
-   
+   //The code below is deciding which line to print depending on whether the users is booking or canceling a room.
+   //It'll print the line with the user's email address when the user is booking a room. 
    private static void reserveRoom(String roomNumber, String emailAddress) throws IOException {
 	  String fileName = "rooms.txt";
 	  String operation = "reserve";
-	  Map<String,String> fileData = FileOperations.convertFile(fileName, roomNumber, emailAddress, operation); //this replaces the full file reader/buffer operations and moves to the FileOperations class
+	  Map<String,String> fileData = FileOperations.convertFile(fileName, roomNumber, emailAddress, operation); 
 	  String oldLine = "";
       String newLine = "";
       String fileDataString = "";
@@ -110,18 +110,13 @@ public class ReserveRoom {
          oldLine = lineToReplace;
          fileDataString = fileData.get(lineToReplace);
       }
-//*************************************
       
       newLine = oldLine.replace("free", emailAddress);
-   
-      //You need to be take the old line and just replace the word 'free' with the email address to created the new line
-      //and then replace the full old line with the new line    
-        String newFileData = fileDataString.replaceAll(oldLine, newLine);
-        
-        FileWriter writer = new FileWriter(fileName);
-        System.out.println("new room: "+ fileData);
-        writer.append(newFileData);
-        writer.flush();
+       String newFileData = fileDataString.replaceAll(oldLine, newLine);
+       FileWriter writer = new FileWriter(fileName);
+       System.out.println("new room: "+ fileData);
+       writer.append(newFileData);
+       writer.flush();
         
        System.out.println("Room " + roomNumber + " has been reserved for " + emailAddress);
    }
