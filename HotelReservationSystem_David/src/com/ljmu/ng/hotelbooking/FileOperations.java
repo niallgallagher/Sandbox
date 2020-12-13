@@ -51,7 +51,7 @@ public class FileOperations {
 			String reservationDetail = line[5];
 			if(reservationDetail.equalsIgnoreCase(FREE)) { isReserved = false; } else { isReserved = true; }
 
-			HotelRoom hotelRoom = new HotelRoom(roomNum, roomType, hasLounge, hasBalcony, roomPrice, isReserved, reservationDetail);
+			HotelRoom hotelRoom = new HotelRoom(roomNum, roomType, hasBalcony, hasLounge, roomPrice, isReserved, reservationDetail);
 			hotelRooms.add(hotelRoom);
 		}		
 		

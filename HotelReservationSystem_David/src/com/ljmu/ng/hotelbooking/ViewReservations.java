@@ -13,41 +13,42 @@ public class ViewReservations {
 	private static boolean foundReservation = false;
 
 	public ViewReservations() {}
-	
+
 	public static void viewReservations() {
 		System.out.println("**** View Reservations ****");
-		
+
 		Scanner choice = new Scanner(System.in);
 
 		System.out.println("What do you want to view?\n\n1. All Rooms\n2. Only Reserved Rooms\n3. Show all Free Rooms\n"
 				+ "4. Specific booking by Email Address\n\n ");
 		int ans = choice.nextInt();
-		
+
 		// I used a switch option to give the user variety in whether they want to view reserved rooms, empty rooms or all rooms.
 		// I allowed the user an option to view their booking by entering their email address.
 		switch(ans) {
-			case 1 : {
-				getAllRoomDetails();
-				break;
-			}
+		case 1 : {
+			getAllRoomDetails();
+			break;
+		}
 
-			case 2 : {
-				getAllReservedRoomDetails();
-				break;
-			}
-			
-			case 3: {
-				getAllFreeRooms();
-			}
+		case 2 : {
+			getAllReservedRoomDetails();
+			break;
+		}
 
-			case 4 : {
-				System.out.print("Email address to look up: ");
-				Scanner emailAddressScanner = new Scanner(System.in);
-				String emailAddress = emailAddressScanner.next();
-				getRevervationsByEmailAddress(emailAddress);
-				emailAddressScanner.close();
-				break;
-			}
+		case 3: {
+			getAllFreeRooms();
+			break;
+		}
+
+		case 4 : {
+			System.out.print("Email address to look up: ");
+			Scanner emailAddressScanner = new Scanner(System.in);
+			String emailAddress = emailAddressScanner.next();
+			getRevervationsByEmailAddress(emailAddress);
+			emailAddressScanner.close();
+			break;
+		}
 		}
 		choice.close();
 
@@ -75,10 +76,8 @@ public class ViewReservations {
 			}
 		}
 	}
-		// The for loop runs through the hotel rooms and prints out the rooms that are "free".
-	
-		//The method seems to ask for email address and I don't know Why? Also It prints email reservation twice.
-	    public static void getAllFreeRooms() {
+	// The for loop runs through the hotel rooms and prints out the rooms that are "free".
+	public static void getAllFreeRooms() {
 		System.out.println("This is the list of all rooms currently free.\n");
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
 		System.out.print("Room No.   Type          Balcony?        Lounge?       Price\n");
@@ -88,27 +87,28 @@ public class ViewReservations {
 			}
 		}
 	}
-	   public static void getAllFreeRoomsMatchingCriteria(String type, boolean balcony, boolean lounge) {
-	   String balconyString = Boolean.toString(balcony);
-	   String loungeString = Boolean.toString(lounge);
-	   System.out.println("The is a list of all currently free rooms\n");
-	   List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
-	   System.out.print("Room No.   Type          Balcony?        Lounge?       Price\n");
-	   for (HotelRoom h : hotelRooms) {
-	      if (!h.isBooked && h.roomType.equalsIgnoreCase(type) && Boolean.toString(h.balcony).equals(balconyString) 
-	    		  && Boolean.toString(h.lounge).equals(loungeString)) {
-	    	  
-	    	  		System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " + h.price +"\n");
-	      }
-	   }
+	public static void getAllFreeRoomsMatchingCriteria(String type, boolean balcony, boolean lounge) {
+		String balconyString = Boolean.toString(balcony);
+		String loungeString = Boolean.toString(lounge);
+
+		System.out.println("The is a list of all currently free rooms\n");
+		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
+		System.out.print("Room No.   Type          Balcony?        Lounge?       Price\n");
+		for (HotelRoom h : hotelRooms) {
+			if (!h.isBooked && h.roomType.equalsIgnoreCase(type) && Boolean.toString(h.balcony).equals(balconyString) 
+					&& Boolean.toString(h.lounge).equals(loungeString)) {
+
+				System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " + h.price +"\n");
+			}
+		}
 	}
 
-	   //The method below gets the booked rooms via email address and prints out the rooms.
-		public static String getRevervationsByEmailAddress(String emailAddress) {
+	//The method below gets the booked rooms via email address and prints out the rooms.
+	public static String getRevervationsByEmailAddress(String emailAddress) {
 
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
 		String roomNum = "";
-		
+
 		for(HotelRoom hotelRoom: hotelRooms) {
 			if(hotelRoom.reservationDetail.equalsIgnoreCase(emailAddress)) {
 				roomNum = String.valueOf(hotelRoom.roomNum);
@@ -120,7 +120,7 @@ public class ViewReservations {
 		if(!foundReservation) {
 			System.out.println("No reservation found for " + emailAddress);
 		}
-		
+
 		return roomNum;
 	}
 }

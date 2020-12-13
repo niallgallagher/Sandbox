@@ -13,23 +13,30 @@ public class Utils {
 	public Utils() {}
 	
 	
-	//Any line i print doesn't make sense for room reservation. 
+	//Any line I print doesn't make sense for room reservation. 
 	public static boolean inputChecker(String input, String inputType) {
-		System.out.println("");		
 		switch(inputType) {
 		
 			case "YesOrNo" : {
 				if(input.equalsIgnoreCase(YES) || input.equalsIgnoreCase(NO) ) {
-					System.out.println("You entered a valid value");		
 					return true;
 				} else {
 					return false;					
 				}
 			}
-		
-		
+			
+			case ROOMNUM : {
+				List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
+				for(HotelRoom hotelRoom : hotelRooms) {
+					if(input.equals(String.valueOf(hotelRoom.roomNum))) {
+						System.out.println("Room Num passed[" + input + " -- Rom Num from File[" + hotelRoom.roomNum + "]");
+						return true;
+					}
+				}
+				return false;
+			}		
 		}
-		return true;
+		return false;
 	}
 	
 	public static boolean inputChecker(int input, String inputType) {

@@ -20,7 +20,7 @@ public class ReserveRoom {
    
    public static void reserveARoom() throws IOException {
 	  //Below I ask the users choice of room.
-      System.out.println("You have selected, 'Reserve a Room' ");
+      System.out.println("***** Reserve Room *****");
       
       String roomTypeChoice = "";
       Scanner roomTypeScanner = new Scanner(System.in);
@@ -43,7 +43,6 @@ public class ReserveRoom {
       while(!isValidBalconyAnswer) {
          System.out.print("Do you need a balcony? Y/N: ");
          balconyScanAnswer = balconyScan.next();
-         System.out.print("You chose [" + balconyScanAnswer + "]");
          if(Utils.inputChecker(balconyScanAnswer, "YesOrNo")) {
             isValidBalconyAnswer = true;
          }
@@ -58,7 +57,6 @@ public class ReserveRoom {
       while(!isValidLoungeAnswer) {
         System.out.print("Do you need a Lounge? Y/N: ");
         loungeScanAnswer = loungeScan.next();
-        System.out.print("You chose [" + loungeScanAnswer + "]");
 
         if(Utils.inputChecker(loungeScanAnswer, "YesOrNo")) {
            isValidLoungeAnswer = true; 
@@ -87,13 +85,15 @@ public class ReserveRoom {
       Scanner emailAddressScanner = new Scanner(System.in);
       String emailAddress = emailAddressScanner.next();
       
-      reserveRoom(roomChoice, emailAddress);
-
       balconyScan.close();
       loungeScan.close();
       roomChoiceScanner.close();
       emailAddressScanner.close();
       roomTypeScanner.close();
+      
+      reserveRoom(roomChoice, emailAddress);     
+      
+      Menu.GenerateMenu();
 
    }
    //The code below is deciding which line to print depending on whether the users is booking or canceling a room.
@@ -101,7 +101,8 @@ public class ReserveRoom {
    private static void reserveRoom(String roomNumber, String emailAddress) throws IOException {
 	  String fileName = "rooms.txt";
 	  String operation = "reserve";
-	  Map<String,String> fileData = FileOperations.convertFile(fileName, roomNumber, emailAddress, operation); 
+	  String roomNum = String.valueOf(roomNumber);
+	  Map<String,String> fileData = FileOperations.convertFile(fileName, roomNum, emailAddress, operation); 
 	  String oldLine = "";
       String newLine = "";
       String fileDataString = "";
@@ -114,9 +115,9 @@ public class ReserveRoom {
       newLine = oldLine.replace("free", emailAddress);
        String newFileData = fileDataString.replaceAll(oldLine, newLine);
        FileWriter writer = new FileWriter(fileName);
-       System.out.println("new room: "+ fileData);
        writer.append(newFileData);
        writer.flush();
+       writer.close();
         
        System.out.println("Room " + roomNumber + " has been reserved for " + emailAddress);
    }

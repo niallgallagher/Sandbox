@@ -33,12 +33,13 @@ public class Menu {
 			System.out.println("Q - Quit ");
 			System.out.print("Pick : ");
 			
-			choice = userChoice.next();
+			choice = userChoice.next().toLowerCase();
 			
 			//The 'if/else statement' is used to ensure the user places a correct input.		
-			if(choice.equalsIgnoreCase("1") || choice.equalsIgnoreCase("2") || choice.equalsIgnoreCase("3")
-					|| choice.equalsIgnoreCase("Q")) {
+			if(choice.equals("1") || choice.equals("2") || choice.equals("3")
+					|| choice.equals("q")) {
 				isValidChoice = true;
+				userChoice.close();
 			} else {
 				System.out.print("Please choose a Valid option");
 			}
@@ -68,7 +69,7 @@ public class Menu {
 				break;
 			}
 			
-			case "Q" : {
+			case "q" : {
 				System.out.print("Goodbye!");
 				break;
 			}
