@@ -27,32 +27,30 @@ public class ViewReservations {
 		// I used a switch option to give the user variety in whether they want to view reserved rooms, empty rooms or all rooms.
 		// I allowed the user an option to view their booking by entering their email address.
 		switch(ans) {
-		case 1 : {
-			getAllRoomDetails();
-			break;
+			case 1 : {
+				getAllRoomDetails();
+				break;
+			}
+	
+			case 2 : {
+				getAllReservedRoomDetails();
+				break;
+			}
+	
+			case 3: {
+				getAllFreeRooms();
+				break;
+			}
+	
+			case 4 : {
+				System.out.print("Email address to look up: ");
+				Scanner emailAddressScanner = new Scanner(System.in);
+				String emailAddress = emailAddressScanner.next();
+				getReservationsByEmailAddress(emailAddress);
+				break;
+			}
 		}
-
-		case 2 : {
-			getAllReservedRoomDetails();
-			break;
-		}
-
-		case 3: {
-			getAllFreeRooms();
-			break;
-		}
-
-		case 4 : {
-			System.out.print("Email address to look up: ");
-			Scanner emailAddressScanner = new Scanner(System.in);
-			String emailAddress = emailAddressScanner.next();
-			getRevervationsByEmailAddress(emailAddress);
-			emailAddressScanner.close();
-			break;
-		}
-		}
-		choice.close();
-
+		ViewReservations.viewReservations();
 	}
 
 	//The 'getAllRoomDetails' method below gets all the rooms from the file 'rooms.txt' using an array 'hotelRooms'.
@@ -107,14 +105,14 @@ public class ViewReservations {
 	}
 
 	//The method below gets the booked rooms via email address and prints out the rooms.
-	public static String getRevervationsByEmailAddress(String emailAddress) {
+	public static List<String> getReservationsByEmailAddress(String emailAddress) {
 
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
-		String roomNum = "";
+		List<String> roomNumList = new ArrayList<>();
 
 		for(HotelRoom hotelRoom: hotelRooms) {
 			if(hotelRoom.reservationDetail.equalsIgnoreCase(emailAddress)) {
-				roomNum = String.valueOf(hotelRoom.roomNum);
+				roomNumList.add(String.valueOf(hotelRoom.roomNum));
 				System.out.print("\nReservation Details for " + emailAddress + "\n" + hotelRoom.toString() + "]\n");
 				foundReservation = true;
 			}
@@ -124,6 +122,7 @@ public class ViewReservations {
 			System.out.println("No reservation found for " + emailAddress);
 		}
 
-		return roomNum;
+		return roomNumList;
+
 	}
 }

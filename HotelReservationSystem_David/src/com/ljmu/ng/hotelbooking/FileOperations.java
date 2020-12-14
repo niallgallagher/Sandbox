@@ -16,14 +16,13 @@ import java.util.Scanner;
  */
 public class FileOperations {
 
-
 	private static String fileName = "rooms.txt";
 	private static File file;
 	public static FileReader fileReader;
 	public static Scanner fileScanner;
 
 	//The array below was created to separate the columns on the word document.
-	private static List<HotelRoom> hotelRooms = new ArrayList<>();
+	private static List<HotelRoom> hotelRooms;
 	private static boolean hasBalcony;
 	private static boolean hasLounge;
 	private static boolean isReserved;
@@ -32,8 +31,12 @@ public class FileOperations {
 
 	public FileOperations() {}
 	public static List<HotelRoom> getHotelRoomList() {
+		
+		hotelRooms = new ArrayList<>();
+		
 		try {
-			fileReader = new FileReader(fileName);
+			file = new File(fileName);
+			fileReader = new FileReader(file);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

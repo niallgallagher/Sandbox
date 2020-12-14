@@ -66,12 +66,12 @@ public class ReserveRoom {
       if(loungeScanAnswer.equalsIgnoreCase("Y")) { isLoungeRequired = true; }
       // The system shows all the available rooms.
       List<HotelRoom> availableRooms = ViewReservations.getAllFreeRoomsMatchingCriteria(roomTypeChoice, isBalconyRequired, isLoungeRequired);
-
+      System.out.println("availableRooms[" + availableRooms.size() + "]");
       if(!availableRooms.isEmpty()) {
          System.out.println("These are the available rooms for reservation\n");
          System.out.println("Room Number        Price");
          for(HotelRoom h: availableRooms) {
-            System.out.println(" " + h.roomNum + "      " + h.price);
+            System.out.println(" " + h.roomNum + "               " + h.price);
          }
       } else {
          System.out.print("No rooms available matching your choice. Please choose again\n\n");
@@ -83,13 +83,15 @@ public class ReserveRoom {
       boolean isValidRoom = false;
       String roomChoice = "";
       Scanner roomChoiceScanner = new Scanner(System.in);
-
+      
       while(!isValidRoom) {
-         System.out.print("Please choose the room number you want to reserve: ");
-         roomChoice = roomChoiceScanner.next();
-         if(Utils.inputChecker(roomChoice, "RoomNum")) {
-            isValidRoom = true;
-         }
+    	  System.out.print("Please choose the room number you want to reserve: ");
+	      roomChoice = roomChoiceScanner.next();
+	      for(HotelRoom h : availableRooms) {
+	    	  if(h.roomNum == Integer.valueOf(roomChoice)) {
+	    		  isValidRoom = true;
+	    	  }
+	      }
       }
       
       System.out.print("Email Address for Reservation: ");

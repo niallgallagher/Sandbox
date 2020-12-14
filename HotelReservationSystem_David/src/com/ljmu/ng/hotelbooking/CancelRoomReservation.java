@@ -5,6 +5,7 @@ package com.ljmu.ng.hotelbooking;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -30,16 +31,19 @@ public class CancelRoomReservation {
 		Scanner emailAddressScanner = new Scanner(System.in);
 		String emailAddress = emailAddressScanner.next();
 
-		String roomNum = ViewReservations.getRevervationsByEmailAddress(emailAddress);
-		System.out.print("Room number to cancel: " + roomNum);
-
+		List<String> roomNums = ViewReservations.getReservationsByEmailAddress(emailAddress);
+		
 		//The system confirms that the user wants to cancel their reservation.
 		//The 'if/else' statement is used to act on the users response which is read through the scanner.
 		System.out.print("\n\nAre you sure you want to cancel reservation? Y/N: ");
 		Scanner cancelReservationScanner = new Scanner(System.in);
 		String choice = cancelReservationScanner.next();
 		if(choice.equalsIgnoreCase(YES)) {
-			cancelReservation(emailAddress, roomNum);
+			for(String roomNum : roomNums) {
+				cancelReservation(emailAddress, roomNum);
+			}			
+			System.out.println("Reservation has been cancelled for " + emailAddress);
+			Menu.GenerateMenu();
 		} else if (choice.equalsIgnoreCase(NO)) {
 			Menu.GenerateMenu();
 		} else {
@@ -47,6 +51,7 @@ public class CancelRoomReservation {
 		}
 		cancelReservationScanner.close();
 		emailAddressScanner.close();
+		
 
 	}
 	
@@ -60,18 +65,15 @@ public class CancelRoomReservation {
 			String fileDataString = "";
 			
 			for(String lineToReplace: fileData.keySet()) {
-				System.out.println("Line to replace[" + lineToReplace + "]");
 				oldLine = lineToReplace;
 				fileDataString = fileData.get(lineToReplace);
 			}
 			
-			newLine = oldLine.replace(emailAddress,"free");
-		
+			newLine = oldLine.replace(emailAddress,"free");		
 			
 	        String newFileData = fileDataString.replaceAll(oldLine, newLine);
 	        
 	        FileWriter writer = new FileWriter(fileName);
-	        System.out.println("new room: "+ fileData);
 	        writer.append(newFileData);
 	        writer.flush();
 	        writer.close();

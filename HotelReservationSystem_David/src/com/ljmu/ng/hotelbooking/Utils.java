@@ -9,6 +9,7 @@ public class Utils {
 	private static final String YES = "Y";
 	private static final String NO = "N";
 	private static final String ROOMNUM = "RoomNum";
+	private static final String YESNO = "YesOrNo";
 
 	public Utils() {}
 
@@ -17,7 +18,7 @@ public class Utils {
 	public static boolean inputChecker(String input, String inputType) {
 		switch(inputType) {
 
-		case "YesOrNo" : {
+		case YESNO : {
 			if(input.equalsIgnoreCase(YES) || input.equalsIgnoreCase(NO) ) {
 				return true;
 			} else {
@@ -29,7 +30,6 @@ public class Utils {
 			List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
 			for(HotelRoom hotelRoom : hotelRooms) {
 				if(input.equals(String.valueOf(hotelRoom.roomNum))) {
-					System.out.println("Room Num passed[" + input + " -- Rom Num from File[" + hotelRoom.roomNum + "]");
 					return true;
 				}
 			}

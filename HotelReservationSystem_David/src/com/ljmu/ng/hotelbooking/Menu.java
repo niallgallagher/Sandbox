@@ -70,7 +70,6 @@ public class Menu {
 
 		case "q" : {
 			System.out.print("Goodbye!");
-			userChoice.close();
 			break;
 		}
 
