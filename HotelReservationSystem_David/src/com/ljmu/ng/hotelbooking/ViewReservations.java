@@ -1,5 +1,6 @@
 package com.ljmu.ng.hotelbooking;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -87,20 +88,22 @@ public class ViewReservations {
 			}
 		}
 	}
-	public static void getAllFreeRoomsMatchingCriteria(String type, boolean balcony, boolean lounge) {
+	public static List<HotelRoom> getAllFreeRoomsMatchingCriteria(String type, boolean balcony, boolean lounge) {
 		String balconyString = Boolean.toString(balcony);
 		String loungeString = Boolean.toString(lounge);
+		boolean roomAvailable = false;
 
-		System.out.println("The is a list of all currently free rooms\n");
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
-		System.out.print("Room No.   Type          Balcony?        Lounge?       Price\n");
-		for (HotelRoom h : hotelRooms) {
-			if (!h.isBooked && h.roomType.equalsIgnoreCase(type) && Boolean.toString(h.balcony).equals(balconyString) 
-					&& Boolean.toString(h.lounge).equals(loungeString)) {
+		List<HotelRoom> availableRooms = new ArrayList<>();
 
-				System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " + h.price +"\n");
+		for (HotelRoom h : hotelRooms) {
+			if (!h.isBooked && h.roomType.equalsIgnoreCase(type) && Boolean.toString(h.balcony).equals(balconyString)
+					&& Boolean.toString(h.lounge).equals(loungeString)) {
+				availableRooms.add(h);
 			}
 		}
+
+		return availableRooms;
 	}
 
 	//The method below gets the booked rooms via email address and prints out the rooms.
