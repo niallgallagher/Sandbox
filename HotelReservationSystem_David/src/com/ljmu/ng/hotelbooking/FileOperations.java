@@ -15,13 +15,13 @@ import java.util.Scanner;
  * The class below was used to help create different operations for the program.
  */
 public class FileOperations {
-	
-	
+
+
 	private static String fileName = "rooms.txt";
 	private static File file;
 	public static FileReader fileReader;
 	public static Scanner fileScanner;
-	
+
 	//The array below was created to separate the columns on the word document.
 	private static List<HotelRoom> hotelRooms = new ArrayList<>();
 	private static boolean hasBalcony;
@@ -29,7 +29,7 @@ public class FileOperations {
 	private static boolean isReserved;
 
 	private static final String FREE = "free";
-	
+
 	public FileOperations() {}
 	public static List<HotelRoom> getHotelRoomList() {
 		try {
@@ -40,7 +40,7 @@ public class FileOperations {
 
 		//The scanner below is checking whether the user wants a balcony or lounge and if so caters for their room demands.
 		fileScanner = new Scanner(fileReader);
-		
+
 		while(fileScanner.hasNext()) {
 			String[] line = fileScanner.nextLine().split(" ");
 			int roomNum = Integer.valueOf(line[0]);
@@ -54,7 +54,7 @@ public class FileOperations {
 			HotelRoom hotelRoom = new HotelRoom(roomNum, roomType, hasBalcony, hasLounge, roomPrice, isReserved, reservationDetail);
 			hotelRooms.add(hotelRoom);
 		}		
-		
+
 		return hotelRooms;
 	}
 	//The below method is telling the system which line needs to be printed whether its for reservation or cancellation
@@ -64,25 +64,25 @@ public class FileOperations {
 		String fileString = "";
 		String lineToReplace = "";
 		Scanner sc = new Scanner(new File(fileName));
-        //instantiating the StringBuffer class
-        StringBuffer buffer = new StringBuffer();
-        //Reading lines of the file and appending them to StringBuffer
-        while (sc.hasNextLine()) {
-        	String line = sc.nextLine();
-        	String[] lineArray = line.split(" ");
-        	buffer.append(line + System.lineSeparator());
-        	if(operation.equals("reserve")) {
-        		if(lineArray[0].equals(roomNum)) {
-        			lineToReplace = line;
-            	}        		
-        	} else if(operation.equals("cancel")) {
-        		if(lineArray[5].equals(emailAddress)) {
-        			lineToReplace = line;
-        		}
-        	}        	
-        }
-        fileString = buffer.toString();
-        fileContentsMap.put(lineToReplace, fileString);
+		//instantiating the StringBuffer class
+		StringBuffer buffer = new StringBuffer();
+		//Reading lines of the file and appending them to StringBuffer
+		while (sc.hasNextLine()) {
+			String line = sc.nextLine();
+			String[] lineArray = line.split(" ");
+			buffer.append(line + System.lineSeparator());
+			if(operation.equals("reserve")) {
+				if(lineArray[0].equals(roomNum)) {
+					lineToReplace = line;
+				}        		
+			} else if(operation.equals("cancel")) {
+				if(lineArray[5].equals(emailAddress)) {
+					lineToReplace = line;
+				}
+			}        	
+		}
+		fileString = buffer.toString();
+		fileContentsMap.put(lineToReplace, fileString);
 		return fileContentsMap;
 	}
 }
