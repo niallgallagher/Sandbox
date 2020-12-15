@@ -64,7 +64,7 @@ public class ViewReservations {
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
 		System.out.print("Room No.   Type          Balcony?        Lounge?       Price        Reservered?\n");
 		for(HotelRoom h: hotelRooms) {
-			System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " + h.price + "          " + h.isBooked + "\n");
+			System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " + "£"+ h.price + "          " + h.reservationDetail + "\n");
 		}
 
 	}
@@ -75,7 +75,7 @@ public class ViewReservations {
 		System.out.print("Room No.   Type          Balcony?        Lounge?       Price        Reservered?\n");
 		for (HotelRoom h : hotelRooms) {
 			if (h.isBooked) {
-				System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " + h.price + "          " + h.reservationDetail + "\n");
+				System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " +  "£" + h.price + "          " + h.reservationDetail + "\n");
 			}
 		}
 	}
@@ -86,7 +86,7 @@ public class ViewReservations {
 		System.out.print("Room No.   Type          Balcony?        Lounge?       Price\n");
 		for (HotelRoom h : hotelRooms) {
 			if (!h.isBooked) {
-				System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " + h.price +"\n");
+				System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " + "£" + h.price +"\n");
 			}
 		}
 	}

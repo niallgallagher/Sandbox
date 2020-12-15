@@ -13,5 +13,5 @@
 303 Suite 60.00 true true free
 304 Suite 60.00 true true free
 305 Suite 60.00 true true free
-306 Double 37.50 true true free
+306 Double 37.50 true true danielpodence@gmail.com
 307 Double 37.50 true true free
