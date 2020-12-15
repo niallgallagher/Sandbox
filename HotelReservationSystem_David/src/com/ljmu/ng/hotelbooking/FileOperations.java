@@ -31,9 +31,9 @@ public class FileOperations {
 
 	public FileOperations() {}
 	public static List<HotelRoom> getHotelRoomList() {
-		
+
 		hotelRooms = new ArrayList<>();
-		
+
 		try {
 			file = new File(fileName);
 			fileReader = new FileReader(file);
@@ -67,8 +67,10 @@ public class FileOperations {
 		String fileString = "";
 		String lineToReplace = "";
 		Scanner sc = new Scanner(new File(fileName));
+		
 		//instantiating the StringBuffer class
 		StringBuffer buffer = new StringBuffer();
+		
 		//Reading lines of the file and appending them to StringBuffer
 		while (sc.hasNextLine()) {
 			String line = sc.nextLine();

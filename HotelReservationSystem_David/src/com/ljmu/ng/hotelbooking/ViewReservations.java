@@ -16,39 +16,43 @@ public class ViewReservations {
 	public ViewReservations() {}
 
 	public static void viewReservations() {
-		System.out.println("**** View Reservations ****");
+		System.out.println("\n**** View Reservations ****");
 
 		Scanner choice = new Scanner(System.in);
 
-		System.out.println("What do you want to view?\n\n1. All Rooms\n2. Only Reserved Rooms\n3. Show all Free Rooms\n"
-				+ "4. Specific booking by Email Address\n\n ");
+		System.out.println("\nWhat do you want to view?\n\n1. All Rooms\n2. Only Reserved Rooms\n3. Show all Free Rooms\n"
+				+ "4. Specific booking by Email Address\n5. Main Menu\n");
 		int ans = choice.nextInt();
 
 		// I used a switch option to give the user variety in whether they want to view reserved rooms, empty rooms or all rooms.
 		// I allowed the user an option to view their booking by entering their email address.
 		switch(ans) {
-			case 1 : {
-				getAllRoomDetails();
-				break;
-			}
-	
-			case 2 : {
-				getAllReservedRoomDetails();
-				break;
-			}
-	
-			case 3: {
-				getAllFreeRooms();
-				break;
-			}
-	
-			case 4 : {
-				System.out.print("Email address to look up: ");
-				Scanner emailAddressScanner = new Scanner(System.in);
-				String emailAddress = emailAddressScanner.next();
-				getReservationsByEmailAddress(emailAddress);
-				break;
-			}
+		case 1 : {
+			getAllRoomDetails();
+			break;
+		}
+
+		case 2 : {
+			getAllReservedRoomDetails();
+			break;
+		}
+
+		case 3: {
+			getAllFreeRooms();
+			break;
+		}
+
+		case 4 : {
+			System.out.print("Email address to look up: ");
+			Scanner emailAddressScanner = new Scanner(System.in);
+			String emailAddress = emailAddressScanner.next();
+			getReservationsByEmailAddress(emailAddress);
+			break;
+		}
+		case 5 : {
+			Menu.GenerateMenu();
+			break;
+		}
 		}
 		ViewReservations.viewReservations();
 	}
@@ -56,7 +60,7 @@ public class ViewReservations {
 	//The 'getAllRoomDetails' method below gets all the rooms from the file 'rooms.txt' using an array 'hotelRooms'.
 	//The array can be viewed more clearly in the class 'FileOperations.java'
 	public static void getAllRoomDetails() {
-		System.out.println("You have selected 'View All Rooms': ");
+		System.out.println("\n**** All Rooms ****");
 		List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
 		System.out.print("Room No.   Type          Balcony?        Lounge?       Price        Reservered?\n");
 		for(HotelRoom h: hotelRooms) {
@@ -71,7 +75,7 @@ public class ViewReservations {
 		System.out.print("Room No.   Type          Balcony?        Lounge?       Price        Reservered?\n");
 		for (HotelRoom h : hotelRooms) {
 			if (h.isBooked) {
-				System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " + h.price + "          " + h.isBooked + "\n");
+				System.out.print(h.roomNum + "        " + h.roomType + "        " + h.balcony + "         " + h.lounge + "           " + h.price + "          " + h.reservationDetail + "\n");
 			}
 		}
 	}
@@ -86,6 +90,8 @@ public class ViewReservations {
 			}
 		}
 	}
+	// The method below is fetching the rooms that are free for booking using my array 'HotelRoom'.
+	// I need this double checked with David.
 	public static List<HotelRoom> getAllFreeRoomsMatchingCriteria(String type, boolean balcony, boolean lounge) {
 		String balconyString = Boolean.toString(balcony);
 		String loungeString = Boolean.toString(lounge);

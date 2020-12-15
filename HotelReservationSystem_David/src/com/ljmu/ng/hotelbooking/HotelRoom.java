@@ -48,7 +48,8 @@ public class HotelRoom {
 	public String getReservationDetail() {
 		return reservationDetail;
 	}
-
+	
+	//I don't understand the code below.
 	@Override
 	public String toString() {
 		return "Room Number - [" + roomNum + "]\n" +

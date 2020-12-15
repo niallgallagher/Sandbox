@@ -14,7 +14,7 @@ public class Utils {
 	public Utils() {}
 
 
-	//Any line I print doesn't make sense for room reservation. 
+	//The boolean below is verifying the users response as valid. 
 	public static boolean inputChecker(String input, String inputType) {
 		switch(inputType) {
 
@@ -25,7 +25,7 @@ public class Utils {
 				return false;					
 			}
 		}
-
+		// I need this clarified with David.
 		case ROOMNUM : {
 			List<HotelRoom> hotelRooms = FileOperations.getHotelRoomList();
 			for(HotelRoom hotelRoom : hotelRooms) {
@@ -38,7 +38,7 @@ public class Utils {
 		}
 		return false;
 	}
-
+	//I need this clarified with David.
 	public static boolean inputChecker(int input, String inputType) {
 
 		switch(inputType) {

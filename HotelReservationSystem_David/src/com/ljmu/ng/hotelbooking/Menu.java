@@ -19,7 +19,7 @@ public class Menu {
 
 	//The method "GenerateMenu" is declared below to help develop an interactive menu for the user.
 	public static void GenerateMenu() {
-		System.out.print("--Room Booking System--");
+		System.out.print("\n--Room Booking System--");
 		String choice = "";
 
 		Scanner userChoice = new Scanner(System.in);
@@ -40,7 +40,7 @@ public class Menu {
 					|| choice.equals("q")) {
 				isValidChoice = true;
 			} else {
-				System.out.print("Please choose a Valid option");
+				System.out.print("Please choose a Valid option!");
 			}
 		}
 		//The "switch" function was used so that the users input would go straight to the method that they requested.
@@ -69,7 +69,7 @@ public class Menu {
 		}
 
 		case "q" : {
-			System.out.print("Goodbye!");
+			System.out.print("\nGoodbye!");
 			break;
 		}
 
