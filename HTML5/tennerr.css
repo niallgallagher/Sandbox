@@ -1,0 +1,70 @@
+/* This is a CSS comment */
+* {
+	padding:0;
+	margin:0;	
+	box-sizing: border-box;
+}
+
+.navbar{
+		display: flex;
+		align-items: center;
+		padding: 20px;		
+}
+
+nav{
+	flex: 1;
+	text-align: left;
+}
+
+nav ul{
+		display: incline-block;
+		list-style-type: none;
+}
+
+nav ul li {
+	display: incline-block;
+	margin right: 20px;
+}
+
+a {
+	text-decoration: none
+	color: #555;
+}
+
+p { 
+	color: #555;
+}
+
+.all-tennerr_articles{
+  margin: 0;
+  padding: 2px;
+  background-color: lightgray;
+}
+
+.all-tennerr_articles > h1, .tennerr_articles {
+  margin: 10px;
+  padding: 5px;
+}
+
+.tennerr_articles {
+  background: white;
+}
+
+.tennerr_article > h2, p {
+  margin: 4px;
+  font-size: 90%;
+}
+
+.container {
+	max-width: 1300px;
+	margin: auto;
+	padding-left: 25px;
+	padding-right: 25px;	
+}
+
+.main_body {
+	border: 5;
+	border-color: #000000;
+}
+
+

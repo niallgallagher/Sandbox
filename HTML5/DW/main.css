@@ -1,0 +1,110 @@
+/* This is a CSS comment */
+* {
+	padding: 0 10px;
+	margin: 2px;
+}
+body {
+	font-family: Arial, Verdana, sans-serif;
+	font-style: normal;
+	font-size: 100%;
+	background-color: white;
+}
+
+#container {
+	margin: 0 auto;
+	width: 1200px;
+	background-color: lightblue;
+}
+
+iframe{
+	align-content: center;
+}
+
+#content {
+	width: 900px;
+}
+
+#product-content {
+	width: 800px;
+}
+
+.flex {
+	
+    display: flex;
+}
+.sameRow {
+	align: left;
+}
+
+.productVideo{
+text-align: center	
+	
+}
+#contact-content {
+	width: 1200px;
+}
+
+#myGallery{
+  position:relative;
+  width:400px; /* Set your image width */
+  height:300px; /* Set your image height */
+}
+#myGallery img{
+  display:none;
+  position:absolute;
+  top:0;
+  left:0;
+}
+#myGallery img.active{
+  display:block;
+}
+header, #main_body, footer {
+						background-color: lightblue;
+}
+
+header {
+		min-height: 40px;
+		margin-bottom: 5px;
+}
+
+#main_body {
+	min-height:200px;
+	margin-bottom: 5px;
+}
+#nav{
+ background-color: #D6EFFF;
+ padding: 10px;
+}
+
+header h1{
+	color: white;
+	font-size: 24pt;
+}
+	
+#main_body h1{
+	color: white;
+	font-size: 18pt;
+}
+
+#main_body p1{
+	color: white;
+	font-size: 12pt;
+}
+
+#main_body p2{
+	color: white;
+	font-size: 12pt;
+}
+
+#footer {
+	text-align: center;
+	padding: 10px;
+
+}
+
+#footer ul li {
+list-style-type: none;
+display: inline;
+font-size: 10pt;
+color: white;
+} 

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Tennerr</title>
+		<link rel="stylesheet" href="main.css" type="text/css" media="screen,projection" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	
+	<body>
+		<div id="container">
+			<div id="top"> 
+				<table><tr><td><img src = "https://picsum.photos/120/120"></td><td>Tennerr - Facemasks for Super Heroes</td></tr></table>				
+			</div>
+			<div id="nav">
+				<p align="left"><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact</a></p>
+			</div>
+			<div class="flex">
+				<div class="sameRow">				
+					<img src = "https://picsum.photos/150/150" align="left">
+				</div>
+				<div class="sameRow">
+					<aside>
+						Harry Potter is a series of seven fantasy novels written by British author, J. K. Rowling. The novels chronicle the lives of a young wizard, Harry Potter, and his friends Hermione Granger and Ron Weasley, all of whom are students at Hogwarts School of Witchcraft and Wizardry.
+						
+					</aside>
+					<script>
+						$(document).ready(function(){
+							$("button").click(function(){
+								$("p").hide();
+								speechSynthesis.speak(new SpeechSynthesisUtterance('Hello Gags'));
+							})
+						});
+					</script>
+					<button>Click me to hide paragraphs</button>
+				</div>
+			</div>		
+			<div class="productVideo">
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/y881t8ilMyc" frameborder="0">
+				</iframe>
+			</div>
+		
+			<div id="footer">
+				Copyright &copy 2021 Niall Gallagher
+			</div>		
+		</div>	
+	</body>
+</html>
