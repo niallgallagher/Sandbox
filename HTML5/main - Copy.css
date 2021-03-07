@@ -1,0 +1,91 @@
+/* This is a CSS comment */
+* {
+	padding: 10px;
+	margin: 2px;
+}
+body {
+	font-family: Arial, Verdana, sans-serif;
+	font-style: normal;
+	font-size: 100%;
+	background-color: blue;
+	background-image src:"https://www.freepik.com/free-vector/super-heroes-couple-flying_3889571.htm#page=1&query=superhero%20background&position=14"
+}
+article{
+	background color: red
+}
+
+#container {
+	margin: 0 auto;
+	width: 1200px;
+}
+
+#container, header, body, footer {
+		border: black solid 2px;
+}
+
+#content {
+	width: 900px;
+}
+
+#product-content {
+	width: 1200px;
+}
+
+#contact-content {
+	width: 1200px;
+}
+
+#adverts {
+	width: 300px;
+	align: right;
+}
+header, body, footer {
+						background-color: lightblue;
+}
+
+header {
+		min-height: 40px;
+		margin-bottom: 5px;
+}
+
+nav{
+ width: 100vw;
+ background-color: #D6EFFF;
+}
+
+header h1{
+	color: white;
+	font-size: 24pt;
+}
+	
+
+
+
+
+footer {
+text-align: center;
+}
+
+footer ul li {
+
+display: inline;
+font-size: 10pt;
+color: white;
+text-align: center;
+} 
+
+aside {
+	width: 30%;
+  padding-left: 15px;
+  margin-left: 15px;
+  float: right;
+  font-style: italic;
+  background-color: lightgray;
+  text-align: right;
+}
+
+#product-video {
+	text-align: center-right;
+	width: 120px;
+	height: 240px;
+}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Tennerr - Contact</title>
+		<link rel="stylesheet" href="main.css" type="text/css" media="screen,projection" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	
+	<body>
+		<div id="container">
+			<div id="top"> 
+				<table><tr><td><img src = "https://picsum.photos/120/120"></td><td>Tennerr - Facemasks for Super Heroes</td></tr></table>				
+			</div>
+			<div id="nav">
+				<p align="left"><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact</a></p>
+			</div>
+			<div id="contact-content">
+				
+			<div>
+				<video autoplay id="vid1" muted="muted" style="float:left; height:100px; width:100px;" poster="https://image.freepik.com/free-icon/video-camera-symbol_318-40225.png"></video>
+			</div>
+			<script>
+						function getUserMedia(options, successCallback, failureCallback) {
+							var api = navigator.getUserMedia || navigator.webkitGetUserMedia ||          
+								navigator.mozGetUserMedia || navigator.msGetUserMedia;        
+							if (api) {            
+								return api.bind(navigator)(options, successCallback, failureCallback);        
+							}        
+							alert('User Media API not supported.');    
+						}
+				/////////////////////////////////////////////////////////////
+						var theStream;
+						var theRecorder;
+						var recordedChunks = [];	
+						var mediaSource = new mediaSource();	
+						var sourceBuffer;	
+							
+							
+							
+				/////////////////////////////////////////////////////////////////
+							function getStream () {
+								recordgetStreamedChunks = [];        
+								var vid2 = document.getElementById('vid2');
+							//	vid.src=windows.URL.createObjectURL(mediaSource);
+								
+								mediaSource.addEventListener('sourceopen', function (e) {            
+									sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="opus,vp8"');        
+								}, false);       
+								// vid2.play();
+								
+								var constraints = {
+												// video:{ width 1280, height: 720 }, audio: true
+									// video {width 384, height 288 }, audio: true
+									video: true audio:true
+								};
+								
+								
+								
+								getUserMedia(constraints, function (stream) {            
+								var mediaControl = document.getElementById('vid1');            
+									if (navigator.mozGetUserMedia) {                
+										mediaControl.mozSrcObject = stream;            
+									} 
+									else {                
+										mediaControl.srcObject = stream;               
+										// mediaControl.src = (window.URL || window.webkitURL).createObjectURL(stream);            
+									}            
+									theStream = stream;            
+									try {
+										recorder = new MediaRecorder(stream);            
+									} 
+									catch (e) {                
+										console.error('Exception while creating MediaRecorder: ' + e);                
+										return;            
+									}            
+									theRecorder = recorder;            
+									console.log('MediaRecorder created');            
+									recorder.ondataavailable = recorderOnDataAvailable;            
+									recorder.start(100);        
+								}, function (err) {           
+									alert('Error: ' + err);        
+								});    
+							}
+				/////////////////////////////////////////////////////////
+				
+				function recorderOnDataAvailable(event) {        
+					if (event.data.size == 0) return;
+					recordedChunks.push(event.data);
+					
+					var reader = new FileReader();
+					reader.addEventListener("loadend", function () {
+						var arr = new Uint8Array(reader.result);
+						sourceBuffer.appendBuffer(arr);        
+					});        
+					reader.readAsArrayBuffer(event.data);    
+				}
+				
+				/////////////////////////////////////////////////////////////
+				function download(fileName) {
+					console.log('Saving data');        
+					theRecorder.stop();
+					theStream.getTracks()[0].stop();
+					
+					var blob = new Blob(recordedChunks, { type: "video/webm" });
+					var url = (window.URL || window.webkitURL).createObjectURL(blob);
+					var a = document.createElement("a");
+					document.body.appendChild(a);
+					a.style = "display: none";
+					a.href = url;
+					a.download = fileName+".webm";        
+					a.click(); 
+					
+					// setTimeout() here is needed for Firefox.        
+					setTimeout(function () {
+						(window.URL || window.webkitURL).revokeObjectURL(url);
+					}, 100);
+				}
+					
+			</script>
+				
+			<button onlick ="getStream()" > Start Recording </button>
+			<button onclick ="download(myVideo.webm)" > Stop & Download </button>
+							
+			</div>
+			<div id="footer">
+				Copyright &copy 2021 Niall Gallagher
+			</div>		
+		</div>	
+	</body>
+</html>

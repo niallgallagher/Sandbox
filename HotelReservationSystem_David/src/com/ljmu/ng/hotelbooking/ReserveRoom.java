@@ -72,7 +72,7 @@ public class ReserveRoom {
 			System.out.println("\nThese are the available rooms for reservation:\n");
 			System.out.println("Room Number        Price");
 			for(HotelRoom h: availableRooms) {
-				System.out.println(" " + h.roomNum + "               " + h.price);
+				System.out.println(" " + h.roomNum + "               " + "£"+ h.price);
 			}
 		} else {
 			System.out.print("No rooms available matching your choice. Please choose again!\n\n");
@@ -88,11 +88,16 @@ public class ReserveRoom {
 		while(!isValidRoom) {
 			System.out.print("\nPlease choose the room number you want to reserve: ");
 			roomChoice = roomChoiceScanner.next();
-			for(HotelRoom h : availableRooms) {
-				if(h.roomNum == Integer.valueOf(roomChoice)) {
-					isValidRoom = true;
+			try {
+				int roomNum = Integer.valueOf(roomChoice);
+				for(HotelRoom h : availableRooms) {
+					if(h.roomNum == roomNum) {
+						isValidRoom = true;
+					}
 				}
-			}
+			} catch (NumberFormatException nfe) {
+				System.out.println("Please enter a valid numeric value for Room Number");
+			}			
 		}
 
 		System.out.print("Email Address for Reservation: ");

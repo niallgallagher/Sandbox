@@ -35,24 +35,27 @@ public class CancelRoomReservation {
 
 		//The system confirms that the user wants to cancel their reservation.
 		//The 'if/else' statement is used to act on the users response which is read through the scanner.
-		System.out.print("\n\nAre you sure you want to cancel reservation? Y/N: ");
-		Scanner cancelReservationScanner = new Scanner(System.in);
-		String choice = cancelReservationScanner.next();
-		if(choice.equalsIgnoreCase(YES)) {
-			for(String roomNum : roomNums) {
-				cancelReservation(emailAddress, roomNum);
-			}			
-			System.out.println("\nReservation has been cancelled for " + emailAddress);
-			Menu.GenerateMenu();
-		} else if (choice.equalsIgnoreCase(NO)) {
-			Menu.GenerateMenu();
+		if(!roomNums.isEmpty()) {
+			System.out.print("\n\nAre you sure you want to cancel reservation? Y/N: ");
+			Scanner cancelReservationScanner = new Scanner(System.in);
+			String choice = cancelReservationScanner.next();
+			if(choice.equalsIgnoreCase(YES)) {
+				for(String roomNum : roomNums) {
+					cancelReservation(emailAddress, roomNum);
+				}			
+				System.out.println("\nReservation has been cancelled for " + emailAddress);
+				Menu.GenerateMenu();
+			} else if (choice.equalsIgnoreCase(NO)) {
+				Menu.GenerateMenu();
+			} else {
+				System.out.println("Please choose a valid option, Y or N");
+			}
+			cancelReservationScanner.close();
 		} else {
-			System.out.println("Please choose a valid option, Y or N");
+			CancelRoomReservation.cancelRoomReservation();
 		}
-		cancelReservationScanner.close();
+				
 		emailAddressScanner.close();
-
-
 	}
 
 	//The method is replacing the word 'free' to the users email address in the file document.
