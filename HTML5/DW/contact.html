@@ -9,17 +9,20 @@
 	
 	<body>
 		<div id="container">
-			<div id="top"> 
-				<table><tr><td><img src = "https://picsum.photos/120/120"></td><td>Tennerr - Facemasks for Super Heroes</td></tr></table>				
-			</div>
-			<div id="nav">
+		
+		  <header> 
+			<img src = "https://picsum.photos/120/120">Tennerr - Facemasks for Super Heroes				
+			</header>
+				<nav>
 				<p align="left"><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact</a></p>
-			</div>
-			<div id="contact-content">
+				</nav>
+			<div class="format">
 				
-			<div>
-				<video autoplay id="vid1" muted="muted" style="float:left; height:100px; width:100px;" poster="https://image.freepik.com/free-icon/video-camera-symbol_318-40225.png"></video>
-			</div>
+			  <video autoplay id="vid1" muted="muted" style="float:left; height:300px; width:300px;" poster="https://image.freepik.com/free-icon/video-camera-symbol_318-40225.png"></video>
+
+			
+				
+				
 			<script>
 						function getUserMedia(options, successCallback, failureCallback) {
 							var api = navigator.getUserMedia || navigator.webkitGetUserMedia ||          
@@ -33,7 +36,7 @@
 						var theStream;
 						var theRecorder;
 						var recordedChunks = [];	
-						var mediaSource = new mediaSource();	
+						var mediaSource = new MediaSource();	
 						var sourceBuffer;	
 							
 							
@@ -50,9 +53,9 @@
 								// vid2.play();
 								
 								var constraints = {
-												// video:{ width 1280, height: 720 }, audio: true
-									// video {width 384, height 288 }, audio: true
-									video: true audio:true
+									// video:{ width 1280, height: 720 }, audio: true
+									
+									video: true, audio:true
 								};
 								
 								
@@ -82,7 +85,7 @@
 									alert('Error: ' + err);        
 								});    
 							}
-				/////////////////////////////////////////////////////////
+				/////////////////////////Buffering the data upon availability////////////////////////////////////////////////////////////////
 				
 				function recorderOnDataAvailable(event) {        
 					if (event.data.size == 0) return;
@@ -118,14 +121,15 @@
 				}
 					
 			</script>
-				
-			<button onlick ="getStream()" > Start Recording </button>
-			<button onclick ="download(myVideo.webm)" > Stop & Download </button>
-							
+<div class="buttonVideo">	
+	 
+			  <button onclick = "getStream()" > Start Record</button>
+<button onclick = "download() " > Stop & Download  </button>
+		</div>				
 			</div>
-			<div id="footer">
+			<footer>
 				Copyright &copy 2021 Niall Gallagher
-			</div>		
+			</footer>		
 		</div>	
 	</body>
 </html>

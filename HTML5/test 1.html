@@ -9,40 +9,48 @@
 	
 	<body>
 		<div id="container">
-			<header> 
+			<div id="top"> 
 				<table><tr><td><img src = "https://picsum.photos/120/120"></td><td>Tennerr - Facemasks for Super Heroes</td></tr></table>				
 			</div>
 			<div id="nav">
 				<p align="left"><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact</a></p>
-			</header>
-			<div class="flex">
-				<div class="sameRow">				
-					<img src = "https://picsum.photos/150/150" align="left">
-				</div>
-				<div class="sameRow">
-					<aside>
-						Harry Potter is a series of seven fantasy novels written by British author, J. K. Rowling. The novels chronicle the lives of a young wizard, Harry Potter, and his friends Hermione Granger and Ron Weasley, all of whom are students at Hogwarts School of Witchcraft and Wizardry.
-						
-					</aside>
-					<script>
-						$(document).ready(function(){
-							$("button").click(function(){
-								$("p").hide();
-								speechSynthesis.speak(new SpeechSynthesisUtterance('Hello Gags'));
-							})
-						});
-					</script>
-					<button>Click me to hide paragraphs</button>
-				</div>
-			</div>		
-			<div class="productVideo">
-				<iframe width="560" height="315" src="https://www.youtube.com/embed/y881t8ilMyc" frameborder="0">
-				</iframe>
 			</div>
-		
-			<div id="footer">
+			<div id="content">
+				<table id="tblContent">
+					<tr>
+						<td>
+							<table>
+								<tr><td id="articles">Etiam lacus est, auctor vitae orci in, sollicitudin dictum ante. Nunc euismod tortor eget nunc pharetra, sed accumsan lacus mattis. Phasellus efficitur nec metus et fermentum. Morbi est mauris, tristique quis nisi tempus, dapibus scelerisque risus. Donec sed gravida nulla, mattis volutpat diam. Ut tincidunt odio turpis, sit amet eleifend libero vestibulum vitae. Vivamus quis magna vel felis lobortis sodales. Nulla et ultrices dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum eget libero neque. Aliquam magna lorem, porttitor eu consectetur non, laoreet ut diam. Sed convallis et est quis suscipit. Donec dignissim suscipit enim sit amet elementum. Nam eu odio leo. Mauris finibus neque vulputate eros dapibus fermentum. Morbi finibus tristique lorem, lacinia condimentum mi.</td></tr>
+								<tr>
+									<td id="products">
+										<table>
+											<tr>
+												<td id="product"><a href="product1.html"><img src = "https://picsum.photos/150/150"></a></td>
+												<td id="product"><a href="product2.html"><img src = "https://picsum.photos/150/150"></a></td>
+												<td id="product"><a href="product3.html"><img src = "https://picsum.photos/150/150"></a></td>
+												<td id="product"><a href="product4.html"><img src = "https://picsum.photos/150/150"></a></td>
+											</tr>
+										</table>
+									</td>
+								</tr>							
+							</table>						
+						</td>
+						
+							<div class="MagicSlideshow" data-options="">
+    <img src="https://picsum.photos/150/150" data-fullscreen-image="https://picsum.photos/150/150"/>
+    <img src="https://picsum.photos/150/150" data-fullscreen-image="https://picsum.photos/150/150"/>
+    <img src="https://picsum.photos/150/150" data-fullscreen-image="https://picsum.photos/150/150"/>
+    <img src="https://picsum.photos/150/150" data-fullscreen-image="https://picsum.photos/150/150"/>
+    <img src="https://picsum.photos/150/150" data-fullscreen-image="https://picsum.photos/150/150"/>
+    
+</div>
+						
+					</tr>
+				</table>			
+			</div>
+			<footer>
 				Copyright &copy 2021 Niall Gallagher
-			</div>		
+			</footer>		
 		</div>	
 	</body>
 </html>
