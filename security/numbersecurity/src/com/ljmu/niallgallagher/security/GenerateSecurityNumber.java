@@ -1,10 +1,12 @@
 package com.ljmu.niallgallagher.security;
 
+import java.io.IOException;
+
 public class GenerateSecurityNumber {
 
     public GenerateSecurityNumber() {}
 
-    public static int getSecurityNumber(String num) {
+    public static int getSecurityNumber(String num) throws IOException {
         // Do the code to generate the number and return the integer value
 
         int[] numArray = new int[num.length()];
@@ -36,12 +38,15 @@ public class GenerateSecurityNumber {
             //System.out.print("runningTotal in loop[" + runningTotal + "]\n");
             i++;
         }
-        System.out.println("runningTotal = " + runningTotal);
+        //System.out.println("runningTotal = " + runningTotal);
         int verNumber = (runningTotal * 9)%10;
         System.out.println("Verification number is " + verNumber);
-        String nyNewNum = num.concat(String.valueOf(verNumber));
-        System.out.println("Ny num including verification: " + nyNewNum);
+        String myNewNum = num.concat(String.valueOf(verNumber));
+        System.out.println("Ny num including verification: " + myNewNum);
 
+        System.out.println("Writing Number to file.......");
+
+        NumberFileWriter.writeNumbersToFile(myNewNum);
         return 0;
     }
 }
