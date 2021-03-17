@@ -7,17 +7,16 @@ import java.io.IOException;
 public class NumberFileWriter {
 
     static String fileName = "myNumberFile.txt";
-    static File myNumberFile = new File(fileName);
     static FileWriter fw;
 
     public NumberFileWriter() {}
 
     public static void writeNumbersToFile(String number) throws IOException {
         try{
-            fw = new FileWriter(fileName);
-            fw.write(number);
+            fw = new FileWriter(fileName, true);
+            fw.write(number + "\n");
         } catch (IOException ioe) {
-            System.out.print("ISsue writing to file: " + ioe);
+            System.out.print("Issue writing to file: " + ioe);
         } finally {
             fw.close();
         }

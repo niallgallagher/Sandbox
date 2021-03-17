@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        String nyNum = "4624652837";
+        String nyNum = "5593338291";
 
         int securityNumber = GenerateSecurityNumber.getSecurityNumber(nyNum);
     }
