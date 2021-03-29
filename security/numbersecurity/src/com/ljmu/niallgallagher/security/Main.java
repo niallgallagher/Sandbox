@@ -8,8 +8,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        System.out.println("How many numbers do you want to generate? ");
-        Scanner scan = new Scanner(System.in);
+        //System.out.println("How many numbers do you want to generate? ");
+    /*    Scanner scan = new Scanner(System.in);
         int numberOfNums = scan.nextInt();
         Random random = new Random();
         StringBuffer sb;
@@ -23,6 +23,8 @@ public class Main {
             System.out.println("Writing Number to file.......");
 
             NumberFileWriter.writeNumbersToFile(securityNumber);
-        }
+        */
+
+        MyFileReader.readMyFile();
     }
 }
