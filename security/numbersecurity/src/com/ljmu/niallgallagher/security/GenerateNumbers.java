@@ -2,11 +2,15 @@ package com.ljmu.niallgallagher.security;
 
 import java.io.IOException;
 
-public class GenerateSecurityNumber {
+public class GenerateNumbers {
 
-    public GenerateSecurityNumber() {}
+    public GenerateNumbers() {}
 
-    public static String getSecurityNumber(String num) throws IOException {
+    public static String getNewNumber(String num) throws IOException {
+        return num.concat(String.valueOf(getSecurityNumber(num)));
+    }
+
+    public static int getSecurityNumber(String num) throws IOException {
 
         int[] numArray = new int[num.length()];
 
@@ -25,11 +29,8 @@ public class GenerateSecurityNumber {
             runningTotal += numArray[i-1] + val;
             i++;
         }
-        int verNumber = (runningTotal * 9)%10;
-        System.out.println("Verification number is " + verNumber);
-        String myNewNum = num.concat(String.valueOf(verNumber));
-        System.out.println("Ny num including verification: " + myNewNum);
+        int securityNumber = (runningTotal * 9)%10;
 
-        return myNewNum;
+        return securityNumber;
     }
 }
