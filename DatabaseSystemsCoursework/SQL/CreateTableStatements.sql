@@ -5,6 +5,9 @@ drop table if exists delegate;
 drop table if exists course;
 drop table if exists gradeaudit;
 
+drop table if exists employee_iq;
+drop table if exists audit1;
+
 
 Create TABLE course (
 `code` CHAR (3) NOT NULL,
@@ -57,3 +60,42 @@ CREATE TABLE gradeaudit (
 `oldgrade` TINYINT NOT NULL,
 `newgrade` TINYINT NOT NULL
 );
+
+CREATE TABLE `employee_iq` (
+  `id` INT AUTO_INCREMENT,
+  `username` VARCHAR(45) NOT NULL,
+  `dob` DATETIME NOT NULL,
+  `iq` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
+  
+INSERT INTO `employee_iq`
+(`username`,
+`dob`,
+`iq`)
+VALUES
+('walldavid',
+'1977-10-07 02:05:55',
+140);
+
+  
+CREATE TABLE `audit1` (
+`username` VARCHAR(45) NOT NULL,
+`action` VARCHAR(8) NOT NULL,
+`changedate` DATETIME NOT NULL,
+`oldIq` INT NOT NULL,
+`newIq` INT NOT NULL);
+  
+CREATE TRIGGER `on_iq_change`
+	AFTER UPDATE ON `employee_iq`
+    FOR EACH ROW
+INSERT INTO `audit1`
+SET `action` = 'update',
+	`username` = 'walldavid',
+    `changedate` = NOW(),
+    `oldIq` = OLD.iq,
+    `newIq` = NEW.iq;
+
+UPDATE `employee_iq`
+	SET `iq` = 145
+    WHERE `username` = 'walldavid';
