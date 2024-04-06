@@ -19,7 +19,7 @@ body {
 	padding: 5px;
 	height: auto;
 	width: 60%;
-	align-self: center;
+    align-self: center;
 	position: relative;
 }
 
@@ -34,6 +34,18 @@ body {
 .content {
 	width: 100%;
 	border-bottom-left-radius: 10px;
+}
+
+#contacttable {
+    width: 100%;
+}
+
+.formcontent {
+    width: 50%;
+}
+
+.partnercontent {
+    width: 50%;
 }
 
 nav {

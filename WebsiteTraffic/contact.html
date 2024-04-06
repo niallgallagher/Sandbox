@@ -1,14 +1,9 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Blog dedicated to the Gaelic Athletic Association (GAA), the beating heart of Irish sport and culture">
-    <meta name="keywords" content="gaa, football, leinster, ulster, connaght, munster, croke park, fixtures, results, players, countyclash"/>
-    <meta name="google-site-verification" content="+google1320233be5b4cfc2=">
-    <meta name="robots" content="index,follow">
-    <title>CountyClash - Contact Us</title>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<meta charset="UTF-8">
+<title>CountyClash - Contact Us</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css"> 
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HPCTSCJW1G"></script>
@@ -29,25 +24,42 @@
 	    <a href="hurling.html">Hurling</a>
     	<a href="contact.html" class="active">Contact</a>
 	</nav>
-  <main class="content">
-	<p>
-	  <form>
-    <label for="name">Name:</label>
-		  <input type="text" id="name" name="name" required></br>
+  <table id="contacttable">
+    <tr>
+      <td>
+        <div class="formcontent">    
+          <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required></br>
+    
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required></br>
+    
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" required></br>
+    
+            <label for="address">Message:</label>
+            <textarea id="address" name="address" rows="4" required></textarea></br>
+    
+            <button type="submit">Submit</button></br>
+          </form>
+      </div>
+      </td>
+      <td>
+        <div class="partnercontent">
+          <h2>Our Partners</h2>
+          <img src="images/partners/scopeorbit.jpg" height="50px" width="50px"><br><a href="https://csmtdale.6112comp.org/index.html" target="_blank">Scope Orbit</a><br>
+          <img src="images/partners/EAlogo.png" height="70px" width="70px"><br><a href="https://csmnpiot.6112comp.org/" target="_blank">Effective Altruism Liverpool</a><br>
+          <img src="images/partners/progolfplus.png" height="70px" width="70px"><br><a href="https://csmasout.6112comp.org/" target="_blank">Pro Golf Plus</a><br>
+          <img src="images/partners/datadetectives.png" height="70px" width="70px"><br><a href="https://csmpgrad.6112comp.org/" target="_blank">Data Detectives</a><br>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required></br>
 
-    <label for="phone">Phone:</label>
-    <input type="tel" id="phone" name="phone" required></br>
-
-    <label for="address">Message:</label>
-    <textarea id="address" name="address" rows="4" required></textarea></br>
-
-    <button type="submit">Submit</button></br>
-</form>
-	  </p>
-	</main>
+        </div>
+        
+      </td>
+    </tr>
+  </table>
+  
   <footer class="footer">Copyright, Niall Gallagher Design, 2024</footer>
 </div>
 	
