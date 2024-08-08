@@ -138,3 +138,12 @@ cb_filtered_data$attack_score <- ((cb_filtered_data$Rating_Z_xgp90 * 0.4) + (cb_
 #CDM Rating Based on Group Attributes 
 cb_filtered_data$cbrating <- ((cb_filtered_data$Rating_Z_mins_played * 0.175) + (cb_filtered_data$def_ability_score * 0.15) + (cb_filtered_data$aer_score * 0.15) + (cb_filtered_data$positioning_score * 0.10) + (cb_filtered_data$ballcarrying_score * 0.2)
                               + (cb_filtered_data$ballplaying_score * 0.2) + (cb_filtered_data$attack_score * 0.025))
+
+
+
+write.csv(cb_filtered_data,"~/crystal_palace/cb_dataset_sample.csv", row.names = FALSE)
+
+
+
+data.2 <- read.csv('/Users/niallgallagher/crystal_palace/cb_dataset_sample.csv')
+

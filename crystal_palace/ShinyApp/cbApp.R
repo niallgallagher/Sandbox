@@ -1,19 +1,53 @@
-#############################
-### Task: Crystal Palace Data Task
-### Name: Niall Gallagher
-### Date: 2024-05-18
-#############################
-
 # libraries
 library(shiny)
 library(DT)
 library(ggplot2)
+library(dplyr)  # For data manipulation
+library(lubridate)  # For date manipulation
+
+# Load the dataset
+data <- read.csv('/Users/niallgallagher/crystal_palace/cb_dataset_sample.csv')
+
+# Print the column names to verify them
+print(colnames(data))
+
+# Select the required columns for filtering and display
+selected_columns <- c(2, 5, 7:11, 47:53)  # Ensure to include all necessary columns
+data <- data[, selected_columns]
+
+# Convert birthdate to Date type and extract year
+data$birthdate <- as.Date(data$birthdate)
+data$birth_year <- year(data$birthdate)
+
+# Extract year from season_name
+data$season_year <- as.numeric(sub(".*(\\d{4}).*", "\\1", data$season_name))
+
+# Calculate age based on season year and birth year
+data$age <- data$season_year - data$birth_year
+
+# Round numeric columns to 2 decimal places
+data <- data %>% mutate(across(where(is.numeric), round, 2))
+
+# Columns to display in the table (excluding height)
+display_columns <- c("player_name", "team_name", "season_name", "mins_played", "age", "def_ability_score",         
+                     "positioning_score", "ballcarrying_score", "ballplaying_score",
+                     "attack_score", "cbrating")
+
+# Custom column names for display
+custom_colnames <- c(
+  "Player", "Team", "Season", "Mins Played", "Age", "Defensive Ability", 
+  "Positioning", "Ball Carrying", "Ball Playing",
+  "Attack", "CB Rating"
+)
+
+# Note: Ensure these names match exactly with the dataset's column names
+displayData <- data[, display_columns, drop = FALSE]
 
 # UI
 ui <- navbarPage(
   title = div(
-    img(src = "logo.png", height = "30px", style = "vertical-align: middle; margin-right: 10px;"), 
-    "My Shiny App"
+    img(src = "logo.png", height = "50px", style = "vertical-align: middle; margin-right: 10px;"), 
+    span("My Shiny App", style = "font-size: 30px;")  # Increase the font size
   ),
   id = "nav",
   
@@ -29,22 +63,43 @@ ui <- navbarPage(
         color: white !important;
         display: flex;
         align-items: center;
+        font-size: 24px !important; /* Increase navbar brand font size */
       }
       .navbar-default .navbar-nav > li > a {
         color: white !important;
+        font-size: 18px !important; /* Increase navbar item font size */
       }
       /* Sidebar customization */
       .well {
         background-color: red !important;
         border: none !important;
-        height: 75vh !important; /* Set sidebar height to 100% of the viewport height */
+        height: 100vh !important; /* Set sidebar height to 100% of the viewport height */
+        width: 300px !important; /* Set sidebar width */
         overflow-y: auto; /* Enable scrolling if content overflows */
+        padding: 15px; /* Adjust padding inside the sidebar */
+        margin-right: 0 !important; /* Remove right margin */
       }
       .well .form-group label {
         color: white !important;
       }
       .well .form-group input, .well .form-group select {
         color: black !important;
+      }
+      /* Adjust main panel */
+      .main-panel {
+        padding-left: 0px !important; /* Remove left padding */
+        margin-left: -10px !important; /* Adjust left margin */
+      }
+      /* Adjust table width and height */
+      .dataTables_wrapper {
+        width: 100% !important; /* Set table width to fill available space */
+        height: calc(100vh - 200px) !important; /* Adjust the height of the table wrapper */
+        overflow: auto !important; /* Enable scrolling */
+        margin-left: 0 !important; /* Move the table to the left */
+      }
+      /* Adjust table width */
+      table.dataTable {
+        width: 100% !important; /* Set table width to fill available space */
       }
     "))
   ),
@@ -53,14 +108,18 @@ ui <- navbarPage(
   sidebarLayout(
     sidebarPanel(
       # Input for selecting a Player
-      selectizeInput("selectedName", "Select Individual:",
-                     choices = c("Alice", "Bob", "Charlie", "David", "Ella"),
-                     multiple = TRUE, options = list(placeholder = 'Select an individual')),
-      selectizeInput("occupation", "Select Occupation(s):",
-                     choices = c("Engineer", "Doctor", "Artist", "Lawyer", "Teacher"),
-                     multiple = TRUE, options = list(placeholder = 'Select occupations')),
+      selectizeInput("player_name", "Select Player:",
+                     choices = NULL,  # Set choices to NULL initially
+                     multiple = TRUE, options = list(placeholder = 'Select a Player')),
+      selectizeInput("competition_name", "Select Competition(s):",
+                     choices = unique(data$competition_name),  # Set choices from dataset
+                     multiple = TRUE, options = list(placeholder = 'Select competitions')),
+      selectizeInput("season", "Select Season(s):",
+                     choices = unique(data$season_name),  # Set choices from dataset
+                     multiple = TRUE, options = list(placeholder = 'Select seasons')),
       sliderInput("ageRange", "Select Age Range:",
-                  min = 20, max = 50, value = c(25, 45), step = 1)
+                  min = min(data$age), max = max(data$age), value = c(min(data$age), max(data$age)), step = 1),
+      width = 4  # Adjust the width of the sidebar
     ),
     mainPanel(
       tabsetPanel(
@@ -73,22 +132,21 @@ ui <- navbarPage(
                  plotOutput("ageBarChart")  # Bar chart
         ),
         # Settings Tab for future settings
-        tabPanel("Settings", "Adjust your settings here.")
-      )
+        tabPanel("Radar Plot", "Compare and Download.")
+      ),
+      width = 8,  # Adjust the width of the main panel
+      class = "main-panel"  # Add class to main panel for styling
     )
   )
 )
 
 # Define the server logic
 server <- function(input, output, session) {
-  # Sample data with multiple columns
-  data <- data.frame(
-    Name = c("Alice", "Bob", "Charlie", "David", "Ella"),
-    Age = c(25, 30, 35, 40, 45),
-    Occupation = c("Engineer", "Doctor", "Artist", "Lawyer", "Teacher"),
-    Location = c("New York", "Los Angeles", "Chicago", "Houston", "Phoenix"),
-    stringsAsFactors = FALSE
-  )
+  
+  # Update selectizeInput choices for player_name
+  observe({
+    updateSelectizeInput(session, "player_name", choices = unique(data$player_name), server = TRUE)
+  })
   
   # Reactive expression to filter data
   filteredData <- reactive({
@@ -96,17 +154,22 @@ server <- function(input, output, session) {
     
     # Filter by age range
     if (!is.null(input$ageRange)) {
-      subset_data <- subset(subset_data, Age >= input$ageRange[1] & Age <= input$ageRange[2])
+      subset_data <- subset(subset_data, age >= input$ageRange[1] & age <= input$ageRange[2])
     }
     
     # Filter by selected name
-    if (!is.null(input$selectedName) && length(input$selectedName) > 0) {
-      subset_data <- subset(subset_data, Name %in% input$selectedName)
+    if (!is.null(input$player_name) && length(input$player_name) > 0) {
+      subset_data <- subset(subset_data, player_name %in% input$player_name)
     }
     
-    # Filter by selected occupations
-    if (length(input$occupation) > 0) {
-      subset_data <- subset(subset_data, Occupation %in% input$occupation)
+    # Filter by selected competition
+    if (!is.null(input$competition_name) && length(input$competition_name) > 0) {
+      subset_data <- subset(subset_data, competition_name %in% input$competition_name)
+    }
+    
+    # Filter by selected season
+    if (!is.null(input$season) && length(input$season) > 0) {
+      subset_data <- subset(subset_data, season_name %in% input$season)
     }
     
     return(subset_data)
@@ -114,13 +177,18 @@ server <- function(input, output, session) {
   
   # Render the interactive table in the Home tab
   output$results <- renderDT({
-    datatable(filteredData(), options = list(pageLength = 5, autoWidth = TRUE))
+    datatable(
+      filteredData()[, display_columns, drop = FALSE], 
+      options = list(pageLength = 5, autoWidth = TRUE, scrollX = TRUE, scrollY = TRUE),
+      colnames = custom_colnames,  # Use custom column names
+      rownames = FALSE
+    )
   })
   
   # Render the bar chart in the Data tab
   output$ageBarChart <- renderPlot({
     # Create a bar chart of the Age of individuals
-    ggplot(filteredData(), aes(x = Name, y = Age, fill = Occupation)) +
+    ggplot(filteredData(), aes(x = player_name, y = age, fill = team_name)) +
       geom_bar(stat = "identity") +
       labs(title = "Age of Individuals by Name", x = "Name", y = "Age") +
       theme_minimal() +
