@@ -142,6 +142,7 @@ cb_filtered_data$cbrating <- ((cb_filtered_data$Rating_Z_mins_played * 0.175) + 
 
 
 write.csv(cb_filtered_data,"~/crystal_palace/cb_dataset_sample.csv", row.names = FALSE)
+print(colnames(data))
 
 
 

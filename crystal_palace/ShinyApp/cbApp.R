@@ -148,23 +148,45 @@ server <- function(input, output, session) {
     updateSelectizeInput(session, "player_name", choices = unique(data$player_name), server = TRUE)
   })
   
-  # Reactive expression to filter data
+  # Reactive expression to filter data based on selected player(s)
+  filteredDataByPlayer <- reactive({
+    if (!is.null(input$player_name) && length(input$player_name) > 0) {
+      return(subset(data, player_name %in% input$player_name))
+    } else {
+      return(data)
+    }
+  })
+  
+  # Update the competition_name choices based on selected player(s)
+  observe({
+    filtered_data <- filteredDataByPlayer()
+    updateSelectizeInput(session, "competition_name", choices = unique(filtered_data$competition_name), server = TRUE)
+  })
+  
+  # Reactive expression to filter data based on selected player(s) and competition(s)
+  filteredDataByCompetition <- reactive({
+    subset_data <- filteredDataByPlayer()
+    
+    if (!is.null(input$competition_name) && length(input$competition_name) > 0) {
+      subset_data <- subset(subset_data, competition_name %in% input$competition_name)
+    }
+    
+    return(subset_data)
+  })
+  
+  # Update the season choices based on selected competition(s)
+  observe({
+    filtered_data <- filteredDataByCompetition()
+    updateSelectizeInput(session, "season", choices = unique(filtered_data$season_name), server = TRUE)
+  })
+  
+  # Reactive expression to further filter data based on all sidebar inputs
   filteredData <- reactive({
-    subset_data <- data
+    subset_data <- filteredDataByCompetition()
     
     # Filter by age range
     if (!is.null(input$ageRange)) {
       subset_data <- subset(subset_data, age >= input$ageRange[1] & age <= input$ageRange[2])
-    }
-    
-    # Filter by selected name
-    if (!is.null(input$player_name) && length(input$player_name) > 0) {
-      subset_data <- subset(subset_data, player_name %in% input$player_name)
-    }
-    
-    # Filter by selected competition
-    if (!is.null(input$competition_name) && length(input$competition_name) > 0) {
-      subset_data <- subset(subset_data, competition_name %in% input$competition_name)
     }
     
     # Filter by selected season
