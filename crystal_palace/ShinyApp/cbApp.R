@@ -20,7 +20,7 @@ data <- data %>%
 # Calculate percentiles
 data <- data %>%
   group_by(Statistic) %>%
-  mutate(Percentile = percent_rank(Value)) %>%
+  mutate(Percentile = percent_rank(Value) * 100) %>%
   ungroup()
 
 data <- data %>% 
@@ -65,7 +65,7 @@ custom_colnames <- c(
 )
 
 # Note: Ensure these names match exactly with the dataset's column names
-displayData <- data[, display_columns, drop = FALSE]
+#displayData <- data[, display_columns, drop = FALSE]
 
 # UI
 ui <- navbarPage(
@@ -164,7 +164,6 @@ ui <- navbarPage(
   )
 )
 
-# Define the server logic
 server <- function(input, output, session) {
   
   # Update selectizeInput choices for player_name
@@ -218,32 +217,79 @@ server <- function(input, output, session) {
       subset_data <- subset(subset_data, season_name %in% input$season)
     }
     
-    # Keep only unique rows based on display_columns
-    subset_data <- subset_data %>% distinct(across(all_of(display_columns)))
-    
     return(subset_data)
+  })
+  
+  # Create a separate reactive dataset for the table that ensures unique rows based on display_columns
+  tableData <- reactive({
+    filteredData() %>%
+      distinct(across(all_of(display_columns)))
   })
   
   # Render the interactive table in the Home tab
   output$results <- renderDT({
     datatable(
-      filteredData()[, display_columns, drop = FALSE], 
+      tableData(),  # Use the unique rows dataset for the table
       options = list(pageLength = 5, autoWidth = TRUE, scrollX = TRUE, scrollY = TRUE),
       colnames = custom_colnames,  # Use custom column names
       rownames = FALSE
     )
   })
   
-  # Render the bar chart in the Data tab
+  # Render the radar chart with a dynamic subheading
   output$ageBarChart <- renderPlot({
-    # Create a bar chart of the Age of individuals
-    ggplot(filteredData(), aes(x = player_name, y = age, fill = team_name)) +
-      geom_bar(stat = "identity") +
-      labs(title = "Age of Individuals by Name", x = "Name", y = "Age") +
+    ratings_data <- filteredData()  # Use the full filtered dataset
+    
+    # Reorder Statistic to group by stat category
+    ratings_data <- ratings_data %>%
+      mutate(Statistic = fct_reorder(Statistic, stat, .fun = min))
+    
+    # Replace underscores with line breaks for better label formatting
+    ratings_data$Statistic <- gsub("_", "\n", ratings_data$Statistic)
+    
+    # Generate subheading based on user selections
+    subheading <- paste(
+      "Competition:", paste(input$competition_name, collapse = ", "), 
+      "| Season:", paste(input$season, collapse = ", "), 
+      "| Minutes Played:", unique(ratings_data$mins_played)
+    )
+    
+    ggplot(ratings_data, aes(Statistic, Percentile)) + 
+      geom_bar(aes(y = 100, fill = stat), stat = "identity", width = 1, colour = "white", alpha = 0.5) +
+      geom_bar(stat = "identity", width = 1, aes(fill = stat), colour = "white") + 
+      coord_polar() + 
+      geom_text(aes(label = round(Percentile, 2)), 
+                position = position_stack(vjust = 0.5), 
+                size = 3, color = "white", check_overlap = TRUE) +  # Ensure labels don't overlap
+      scale_fill_manual(values = c("Defense" = "#FF9300", "Positioning" = "#008000", "Attacking" = "#D70232", "Aerial" = "blue", "Ball Carrying" = "purple", "Passing" = "navy")) +
+      scale_y_continuous(limits = c(-10, 100), breaks = seq(0, 100, by = 20)) +  # Add more ticks
+      labs(
+        fill = "",
+        caption = "Data Example",
+        title = ratings_data$player_name[1],
+        subtitle = subheading  # Add dynamic subheading
+      ) + 
       theme_minimal() +
-      scale_fill_brewer(palette = "Set3")
+      theme(
+        legend.position = "top",
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.text.x = element_text(size = 10, angle = 0, hjust = 1),  # Horizontal labels
+        text = element_text(family = "Arial"),
+        plot.title = element_text(hjust = 0.5, size = 16),
+        plot.subtitle = element_text(hjust = 0.5, size = 12),  # Style the subheading
+        plot.caption = element_text(hjust = 0.5, size = 10),
+        panel.grid.major = element_line(color = "gray", linetype = "dashed"),
+        panel.grid.minor = element_blank()
+      )
   })
+  
 }
+
+# Run the app
+shinyApp(ui = ui, server = server)
+
 
 # Run the app
 shinyApp(ui = ui, server = server)

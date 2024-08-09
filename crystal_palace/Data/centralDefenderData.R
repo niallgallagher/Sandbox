@@ -6,8 +6,6 @@
 
 #Libraries
 library(dplyr)
-
-
 #Read Dataset
 data <- read.csv('/Users/niallgallagher/football_data/src_ra_data_sample.csv')
 
@@ -21,17 +19,17 @@ View(data)
 #Filtering Data Based on Players who have played in the Central Defender
 filtered_data <- data %>%
   group_by(player_id,season_name) %>%
-  filter(sum(mins_played[src_detailed_position == "cb4" | src_detailed_position == "cbc3" | src_detailed_position == "cbo3"]) > 400) %>%
+  filter(sum(mins_played[src_detailed_position == "cbc3" | src_detailed_position == "cbo3" ]) > 500) %>%
   ungroup()
 
 filtered_data <- filtered_data %>%
   group_by(player_id, season_name) %>%
-  filter(area_name %in% c("England", "Spain", "France","Germany","Italy") & divisionlevel == 1) %>%
+  filter(area_name %in% c("England", "Spain", "France","Germany","Italy","Portugal","Brazil","Belgium","Netherlands") & divisionlevel == 1) %>%
   ungroup()
 
 filtered_data <- filtered_data %>%
   group_by(player_id, season_name) %>%
-  filter(src_detailed_position %in% c("cb4", "cbc3", "cbo3")) %>%
+  filter(src_detailed_position %in% c("cbc3", "cbo3")) %>%
   ungroup()
 
 filtered_data <- filtered_data %>%
@@ -140,6 +138,15 @@ cb_filtered_data$cbrating <- ((cb_filtered_data$Rating_Z_mins_played * 0.175) + 
                               + (cb_filtered_data$ballplaying_score * 0.2) + (cb_filtered_data$attack_score * 0.025))
 
 
+cb_filtered_data <- cb_filtered_data %>% filter(birthdate > '2000-01-01')
+
+
+cb_filtered_data <- cb_filtered_data %>% filter(cbrating > 49)
+
+
+duplicates_df <- cb_filtered_data %>%
+  group_by(player_id) %>%
+  filter(n() > 1)
 
 write.csv(cb_filtered_data,"~/crystal_palace/cb_dataset_sample.csv", row.names = FALSE)
 print(colnames(data))
