@@ -4,16 +4,40 @@ library(DT)
 library(ggplot2)
 library(dplyr)  # For data manipulation
 library(lubridate)  # For date manipulation
+library(tidyverse)
 
 # Load the dataset
 data <- read.csv('/Users/niallgallagher/crystal_palace/cb_dataset_sample.csv')
 
-# Print the column names to verify them
-print(colnames(data))
+data <- data %>%
+  pivot_longer(
+    cols = 12:28,  # Columns 12 to 28 for Statistic and Value
+    names_to = "Statistic",  # Name these columns as "Statistic"
+    values_to = "Value"  # The corresponding values as "Value"
+  ) 
 
-# Select the required columns for filtering and display
-selected_columns <- c(2, 5, 7:11, 47:53)  # Ensure to include all necessary columns
-data <- data[, selected_columns]
+
+# Calculate percentiles
+data <- data %>%
+  group_by(Statistic) %>%
+  mutate(Percentile = percent_rank(Value)) %>%
+  ungroup()
+
+data <- data %>% 
+  mutate(stat=case_when(Statistic == "defesnive_duels_P90"|
+                          Statistic == "duel_won_percentage" ~ "Defense",
+                        Statistic == "aerialduels_P90"|
+                          Statistic == "aerials_success_rate" ~ "Aerial",
+                        Statistic == "shots_blocked_P90"|
+                          Statistic == "padj_interceptions" ~ "Positioning",
+                        Statistic == "progressive_runs_P90"|
+                          Statistic == "accelerations_P90" ~ "Ball Carrying",
+                        Statistic == "accurate_passing_pct"|
+                          Statistic == "forward_passing_p90"|
+                          Statistic == "final_third_passing_pct"|
+                          Statistic == "progressivepasses_p90"|
+                          Statistic == "progressivepasses_pct" ~ "Passing",
+                        TRUE ~ "Attacking"))
 
 # Convert birthdate to Date type and extract year
 data$birthdate <- as.Date(data$birthdate)
@@ -193,6 +217,9 @@ server <- function(input, output, session) {
     if (!is.null(input$season) && length(input$season) > 0) {
       subset_data <- subset(subset_data, season_name %in% input$season)
     }
+    
+    # Keep only unique rows based on display_columns
+    subset_data <- subset_data %>% distinct(across(all_of(display_columns)))
     
     return(subset_data)
   })
