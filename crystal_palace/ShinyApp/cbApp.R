@@ -16,7 +16,6 @@ data <- data %>%
     values_to = "Value"  # The corresponding values as "Value"
   ) 
 
-
 # Calculate percentiles
 data <- data %>%
   group_by(Statistic) %>%
@@ -38,6 +37,28 @@ data <- data %>%
                           Statistic == "progressivepasses_p90"|
                           Statistic == "progressivepasses_pct" ~ "Passing",
                         TRUE ~ "Attacking"))
+
+
+data <- data %>%
+  mutate(Statistic = recode(Statistic,
+                             "defesnive_duels_P90"= "Defensive Duels P90",
+                            "duel_won_percentage"= "Duel Won %",
+                             "aerialduels_P90"= "Aerial Duels P90",
+                             "aerials_success_rate"= "Aerial Success %",
+                             "shots_blocked_P90"= "Shots Blocked P90",
+                             "padj_interceptions"= "Padj Interceptions",
+                             "progressive_runs_P90"= "Progressive Runs P90",
+                             "accelerations_P90"= "Accelerations P90",
+                             "accurate_passing_pct"= "Accurate Passing %",
+                             "forward_passing_p90"= "Forward Passing P90",
+                             "final_third_passing_pct"= "Final Third Passing %",
+                             "progressivepasses_p90"= "Progressive Passes P90",
+                             "progressivepasses_pct" = "Progressive Passes %",
+                             "shotsp90" = "Shots P90",
+                             "xgp90" = "xG P90",
+                             "goalp90" = "Goal P90",
+                            "headedshotsp90" = "Head Shots P90"
+                            ))
 
 # Convert birthdate to Date type and extract year
 data$birthdate <- as.Date(data$birthdate)
@@ -64,14 +85,11 @@ custom_colnames <- c(
   "Attack", "CB Rating"
 )
 
-# Note: Ensure these names match exactly with the dataset's column names
-#displayData <- data[, display_columns, drop = FALSE]
-
 # UI
 ui <- navbarPage(
   title = div(
     img(src = "logo.png", height = "50px", style = "vertical-align: middle; margin-right: 10px;"), 
-    span("My Shiny App", style = "font-size: 30px;")  # Increase the font size
+    span("Central Defender", style = "font-size: 30px;")  # Increase the font size
   ),
   id = "nav",
   
@@ -143,6 +161,7 @@ ui <- navbarPage(
                      multiple = TRUE, options = list(placeholder = 'Select seasons')),
       sliderInput("ageRange", "Select Age Range:",
                   min = min(data$age), max = max(data$age), value = c(min(data$age), max(data$age)), step = 1),
+      downloadButton("downloadRadarPlot", "Download Radar Chart"),  # Download button placed in the sidebar
       width = 4  # Adjust the width of the sidebar
     ),
     mainPanel(
@@ -152,11 +171,10 @@ ui <- navbarPage(
                  DTOutput("results")  # Interactive table
         ),
         # Data Tab with Bar Chart
-        tabPanel("Data", 
-                 plotOutput("ageBarChart")  # Bar chart
+        tabPanel("Radar Plot", 
+                 plotOutput("radarBarChart")  # Bar chart
         ),
         # Settings Tab for future settings
-        tabPanel("Radar Plot", "Compare and Download.")
       ),
       width = 8,  # Adjust the width of the main panel
       class = "main-panel"  # Add class to main panel for styling
@@ -236,16 +254,16 @@ server <- function(input, output, session) {
     )
   })
   
-  # Render the radar chart with a dynamic subheading
-  output$ageBarChart <- renderPlot({
+  output$radarBarChart <- renderPlot({
     ratings_data <- filteredData()  # Use the full filtered dataset
     
-    # Reorder Statistic to group by stat category
+    # Reorder Statistic to group by stat category and then by Statistic
     ratings_data <- ratings_data %>%
-      mutate(Statistic = fct_reorder(Statistic, stat, .fun = min))
+      arrange(stat, Statistic) %>%  # Arrange by category and statistic
+      mutate(Statistic = factor(Statistic, levels = unique(Statistic)))  # Maintain order
     
     # Replace underscores with line breaks for better label formatting
-    ratings_data$Statistic <- gsub("_", "\n", ratings_data$Statistic)
+    ratings_data$Statistic <- gsub(" ", "\n", ratings_data$Statistic)
     
     # Generate subheading based on user selections
     subheading <- paste(
@@ -257,39 +275,87 @@ server <- function(input, output, session) {
     ggplot(ratings_data, aes(Statistic, Percentile)) + 
       geom_bar(aes(y = 100, fill = stat), stat = "identity", width = 1, colour = "white", alpha = 0.5) +
       geom_bar(stat = "identity", width = 1, aes(fill = stat), colour = "white") + 
-      coord_polar() + 
+      coord_polar(clip = "off") +  # Prevents clipping of elements outside the chart
+      expand_limits(y = c(-50, 100)) +  # Zooms in by expanding the y limits
       geom_text(aes(label = round(Percentile, 2)), 
                 position = position_stack(vjust = 0.5), 
-                size = 3, color = "white", check_overlap = TRUE) +  # Ensure labels don't overlap
+                size = 4, color = "white", check_overlap = TRUE) +  # Increase text size
       scale_fill_manual(values = c("Defense" = "#FF9300", "Positioning" = "#008000", "Attacking" = "#D70232", "Aerial" = "blue", "Ball Carrying" = "purple", "Passing" = "navy")) +
       scale_y_continuous(limits = c(-10, 100), breaks = seq(0, 100, by = 20)) +  # Add more ticks
       labs(
         fill = "",
-        caption = "Data Example",
+        caption = "Sample Data",
         title = ratings_data$player_name[1],
         subtitle = subheading  # Add dynamic subheading
       ) + 
       theme_minimal() +
       theme(
         legend.position = "top",
+        legend.text = element_text(size = 16, face = "bold"),  # Increase size and bold for sub-headings
+        legend.title = element_text(size = 16, face = "bold"),  # Increase size and bold for legend title if applicable
         axis.title.y = element_blank(),
         axis.title.x = element_blank(),
         axis.text.y = element_blank(),
-        axis.text.x = element_text(size = 10, angle = 0, hjust = 1),  # Horizontal labels
+        axis.text.x = element_text(size = 14, angle = 0, hjust = 1, face = "bold"),  # Increase label size and make bold
         text = element_text(family = "Arial"),
-        plot.title = element_text(hjust = 0.5, size = 16),
-        plot.subtitle = element_text(hjust = 0.5, size = 12),  # Style the subheading
-        plot.caption = element_text(hjust = 0.5, size = 10),
+        plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),  # Increase title size and make bold
+        plot.subtitle = element_text(hjust = 0.5, size = 16, face = "bold"),  # Increase subtitle size and make bold
+        plot.caption = element_text(hjust = 0.5, size = 14, face = "bold"),  # Increase caption size and make bold
         panel.grid.major = element_line(color = "gray", linetype = "dashed"),
         panel.grid.minor = element_blank()
       )
-  })
+  }, height = 700, width = 700)  # Increase plot size in Shiny
   
+  # Implement the download handler
+  output$downloadRadarPlot <- downloadHandler(
+    filename = function() {
+      paste("radar_chart", Sys.Date(), ".png", sep = "")
+    },
+    content = function(file) {
+      # Save the plot as a PNG file
+      png(file, width = 700, height = 700)
+      print(
+        ggplot(filteredData(), aes(Statistic, Percentile)) + 
+          geom_bar(aes(y = 100, fill = stat), stat = "identity", width = 1, colour = "white", alpha = 0.5) +
+          geom_bar(stat = "identity", width = 1, aes(fill = stat), colour = "white") + 
+          coord_polar(clip = "off") +  # Prevents clipping of elements outside the chart
+          expand_limits(y = c(-50, 100)) +  # Zooms in by expanding the y limits
+          geom_text(aes(label = round(Percentile, 2)), 
+                    position = position_stack(vjust = 0.5), 
+                    size = 4, color = "white", check_overlap = TRUE) +  # Increase text size
+          scale_fill_manual(values = c("Defense" = "#FF9300", "Positioning" = "#008000", "Attacking" = "#D70232", "Aerial" = "blue", "Ball Carrying" = "purple", "Passing" = "navy")) +
+          scale_y_continuous(limits = c(-10, 100), breaks = seq(0, 100, by = 20)) +  # Add more ticks
+          labs(
+            fill = "",
+            caption = "Sample Data",
+            title = filteredData()$player_name[1],
+            subtitle = paste(
+              "Competition:", paste(input$competition_name, collapse = ", "), 
+              "| Season:", paste(input$season, collapse = ", "), 
+              "| Minutes Played:", unique(filteredData()$mins_played)
+            )  # Add dynamic subheading
+          ) + 
+          theme_minimal() +
+          theme(
+            legend.position = "top",
+            legend.text = element_text(size = 16, face = "bold"),  # Increase size and bold for sub-headings
+            legend.title = element_text(size = 16, face = "bold"),  # Increase size and bold for legend title if applicable
+            axis.title.y = element_blank(),
+            axis.title.x = element_blank(),
+            axis.text.y = element_blank(),
+            axis.text.x = element_text(size = 14, angle = 0, hjust = 1, face = "bold"),  # Increase label size and make bold
+            text = element_text(family = "Arial"),
+            plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),  # Increase title size and make bold
+            plot.subtitle = element_text(hjust = 0.5, size = 16, face = "bold"),  # Increase subtitle size and make bold
+            plot.caption = element_text(hjust = 0.5, size = 14, face = "bold"),  # Increase caption size and make bold
+            panel.grid.major = element_line(color = "gray", linetype = "dashed"),
+            panel.grid.minor = element_blank()
+          )
+      )
+      dev.off()
+    }
+  )
 }
-
-# Run the app
-shinyApp(ui = ui, server = server)
-
 
 # Run the app
 shinyApp(ui = ui, server = server)
